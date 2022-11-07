@@ -9,3 +9,132 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model RoomType {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String
+  occupancy   Int
+  price       Float
+  amenities   String[]
+  details     String[]
+  Room        Room[]
+  Booking     Booking[]
+}
+
+model Room {
+  id           Int            @id @default(autoincrement())
+  roomType     RoomType       @relation(fields: [roomTypeId], references: [id])
+  roomTypeId   Int
+  roomNumber   Int
+  floorNumber  Int
+  roomStatus   RoomStatus     @default(VACANT)
+  Booking      Booking[]
+  Housekeeping Housekeeping[]
+}
+
+enum RoomStatus {
+  RESERVED
+  VACANT
+}
+
+model Guest {
+  id            Int         @id @default(autoincrement())
+  firstName     String
+  lastName      String
+  email         String
+  phoneNumber   String
+  country       String
+  address       String
+  latestBooking DateTime
+  city          String
+  postalCode    String
+  status        GuestStatus @default(ACTIVE)
+  bookingsCount Int
+  Booking       Booking[]
+}
+
+enum GuestStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model Booking {
+  id            Int           @id @default(autoincrement())
+  status        BookingStatus @default(CONFIRMED)
+  arrivalDate   DateTime
+  departureDate DateTime
+  paymentMethod PaymentMethod @default(BANK_ACCOUNT)
+  roomType      RoomType      @relation(fields: [roomTypeId], references: [id])
+  roomTypeId    Int
+  room          Room          @relation(fields: [roomId], references: [id])
+  roomId        Int
+  adults        Int
+  children      Int
+  guest         Guest         @relation(fields: [guestId], references: [id])
+  guestId       Int
+}
+
+enum BookingStatus {
+  CONFIRMED
+  NOT_CONFIRMED
+  PENDING
+  CANCELLED
+}
+
+enum PaymentMethod {
+  BANK_ACCOUNT
+  CASH
+}
+
+model Housekeeping {
+  id                 Int                @id @default(autoincrement())
+  room               Room               @relation(fields: [roomId], references: [id])
+  roomId             Int
+  housekeepingStatus HousekeepingStatus @default(CLEAN)
+  priorityStatus     PriorityStatus     @default(HIGH)
+  comments           String
+}
+
+enum HousekeepingStatus {
+  CLEAN
+  CLEANING
+  DIRTY
+  OUT_OF_SERVICE
+}
+
+enum PriorityStatus {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+model GeneralSettings {
+  id          Int    @id @default(autoincrement())
+  hotelName   String
+  country     String
+  email       String
+  phoneNumber String
+}
+
+model AboutInfo {
+  id           Int           @id @default(autoincrement())
+  title        String
+  description  String
+  aboutDetails AboutDetail[]
+}
+
+model AboutDetail {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String
+  AboutInfo   AboutInfo? @relation(fields: [aboutInfoId], references: [id])
+  aboutInfoId Int?
+}
+
+model ProfileInfo {
+  id          Int    @id @default(autoincrement())
+  name        String
+  email       String
+  phoneNumber String
+}
