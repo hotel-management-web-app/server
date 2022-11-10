@@ -4,7 +4,7 @@ import { Prisma } from '@prisma/client';
 interface ResponseError extends Error {
   status?: number;
   code?: string;
-  meta: { cause: string };
+  meta: { cause: string; target: Array<string> };
 }
 
 export const errorHandler = (
@@ -13,10 +13,21 @@ export const errorHandler = (
   res: Response,
   next: NextFunction,
 ) => {
-  const errorStatus = err.status || 500;
-  const errorMessage = err.message || 'Something went wrong!';
+  let errorStatus = err.status || 500;
+  let errorMessage = err.message || 'Something went wrong!';
   console.log(err);
-  return res.status(errorStatus).json({ 
+  switch (err.code) {
+    case 'P2025':
+      errorStatus = 400;
+      errorMessage = err.meta.cause;
+      break;
+    case 'P2002':
+      errorStatus = 400;
+      errorMessage = `Element with that ${err.meta.target[0]} already exists`;
+      break;
+  }
+
+  return res.status(errorStatus).json({
     status: errorStatus,
     message: errorMessage,
     stack: err.stack,
