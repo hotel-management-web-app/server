@@ -25,6 +25,8 @@ CREATE TABLE "RoomType" (
     "price" DOUBLE PRECISION NOT NULL,
     "amenities" TEXT[],
     "details" TEXT[],
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "RoomType_pkey" PRIMARY KEY ("id")
 );
@@ -36,6 +38,8 @@ CREATE TABLE "Room" (
     "roomNumber" INTEGER NOT NULL,
     "floorNumber" INTEGER NOT NULL,
     "roomStatus" "RoomStatus" NOT NULL DEFAULT 'VACANT',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Room_pkey" PRIMARY KEY ("id")
 );
@@ -54,6 +58,8 @@ CREATE TABLE "Guest" (
     "postalCode" TEXT NOT NULL,
     "status" "GuestStatus" NOT NULL DEFAULT 'ACTIVE',
     "bookingsCount" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Guest_pkey" PRIMARY KEY ("id")
 );
@@ -70,6 +76,8 @@ CREATE TABLE "Booking" (
     "adults" INTEGER NOT NULL,
     "children" INTEGER NOT NULL,
     "guestId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Booking_pkey" PRIMARY KEY ("id")
 );
@@ -81,6 +89,8 @@ CREATE TABLE "Housekeeping" (
     "housekeepingStatus" "HousekeepingStatus" NOT NULL DEFAULT 'CLEAN',
     "priorityStatus" "PriorityStatus" NOT NULL DEFAULT 'HIGH',
     "comments" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Housekeeping_pkey" PRIMARY KEY ("id")
 );
@@ -92,6 +102,8 @@ CREATE TABLE "GeneralSettings" (
     "country" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "GeneralSettings_pkey" PRIMARY KEY ("id")
 );
@@ -101,6 +113,8 @@ CREATE TABLE "AboutInfo" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "AboutInfo_pkey" PRIMARY KEY ("id")
 );
@@ -111,6 +125,8 @@ CREATE TABLE "AboutDetail" (
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "aboutInfoId" INTEGER,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "AboutDetail_pkey" PRIMARY KEY ("id")
 );
@@ -121,6 +137,8 @@ CREATE TABLE "ProfileInfo" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "ProfileInfo_pkey" PRIMARY KEY ("id")
 );

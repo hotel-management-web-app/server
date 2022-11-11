@@ -20,6 +20,8 @@ model RoomType {
   details     String[]
   Room        Room[]
   Booking     Booking[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Room {
@@ -31,6 +33,8 @@ model Room {
   roomStatus   RoomStatus     @default(VACANT)
   Booking      Booking[]
   Housekeeping Housekeeping[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
 }
 
 enum RoomStatus {
@@ -52,6 +56,8 @@ model Guest {
   status        GuestStatus @default(ACTIVE)
   bookingsCount Int
   Booking       Booking[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }
 
 enum GuestStatus {
@@ -73,6 +79,8 @@ model Booking {
   children      Int
   guest         Guest         @relation(fields: [guestId], references: [id])
   guestId       Int
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 enum BookingStatus {
@@ -94,6 +102,8 @@ model Housekeeping {
   housekeepingStatus HousekeepingStatus @default(CLEAN)
   priorityStatus     PriorityStatus     @default(HIGH)
   comments           String
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
 }
 
 enum HousekeepingStatus {
@@ -110,11 +120,13 @@ enum PriorityStatus {
 }
 
 model GeneralSettings {
-  id          Int    @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   hotelName   String
   country     String
   email       String
   phoneNumber String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model AboutInfo {
@@ -122,6 +134,8 @@ model AboutInfo {
   title        String
   description  String
   aboutDetails AboutDetail[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model AboutDetail {
@@ -130,11 +144,15 @@ model AboutDetail {
   description String
   AboutInfo   AboutInfo? @relation(fields: [aboutInfoId], references: [id])
   aboutInfoId Int?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model ProfileInfo {
-  id          Int    @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   email       String
   phoneNumber String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

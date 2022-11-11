@@ -37,7 +37,7 @@ export const updateRoomType = asyncHandler(async (req, res) => {
   res.send(roomType);
 });
 
-export const deleteRoomType = asyncHandler(async (req, res, next) => {
+export const deleteRoomType = asyncHandler(async (req, res) => {
   const roomType = await prisma.roomType.delete({
     where: {
       id: Number(req.params.id),

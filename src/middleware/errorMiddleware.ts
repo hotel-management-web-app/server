@@ -15,7 +15,7 @@ export const errorHandler = (
 ) => {
   let errorStatus = err.status || 500;
   let errorMessage = err.message || 'Something went wrong!';
-  console.log(err);
+
   switch (err.code) {
     case 'P2025':
       errorStatus = 400;
