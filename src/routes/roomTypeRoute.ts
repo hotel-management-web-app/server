@@ -9,10 +9,11 @@ import {
 
 const router = express.Router();
 
-router.get('/', getRoomTypes);
-router.get('/:id', getRoomType)
-router.post('/', createRoomType);
-router.put('/:id', updateRoomType)
-router.delete('/:id', deleteRoomType)
+router.route('/').get(getRoomTypes).post(createRoomType);
+router
+  .route('/:id')
+  .get(getRoomType)
+  .put(updateRoomType)
+  .delete(deleteRoomType);
 
 export default router;

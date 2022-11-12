@@ -1,6 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import prisma from '../lib/prisma';
+import { roomTypeSchema } from '../lib/validationSchemas';
 import { createCustomError } from '../utils/error';
+import Validator from '../utils/validator';
 
 export const getRoomTypes = asyncHandler(async (req, res) => {
   const roomTypes = await prisma.roomType.findMany();
@@ -23,11 +25,19 @@ export const getRoomType = asyncHandler(async (req, res, next) => {
 });
 
 export const createRoomType = asyncHandler(async (req, res) => {
+  const validator = new Validator(roomTypeSchema, req.body);
+
+  validator.showErrors(res);
+
   const roomType = await prisma.roomType.create({ data: req.body });
   res.send(roomType);
 });
 
 export const updateRoomType = asyncHandler(async (req, res) => {
+  const validator = new Validator(roomTypeSchema, req.body);
+
+  validator.showErrors(res);
+
   const roomType = await prisma.roomType.update({
     where: {
       id: Number(req.params.id),
