@@ -19,6 +19,20 @@ async function main() {
         floorNumber: faker.datatype.number({ min: 1, max: 5 }),
       },
     });
+
+    await prisma.guest.create({
+      data: {
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        email: faker.internet.email(),
+        phoneNumber: faker.phone.number(),
+        country: faker.address.country(),
+        address: faker.address.streetAddress(),
+        latestBooking: faker.date.future(),
+        city: faker.address.city(),
+        postalCode: faker.address.zipCode(),
+      }
+    })
   }
 }
 

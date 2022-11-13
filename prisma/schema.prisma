@@ -18,8 +18,8 @@ model RoomType {
   price       Float
   amenities   String[]
   details     String[]
-  Room        Room[]
-  Booking     Booking[]
+  rooms       Room[]
+  bookings    Booking[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
@@ -31,8 +31,8 @@ model Room {
   roomNumber   Int
   floorNumber  Int
   roomStatus   RoomStatus     @default(VACANT)
-  Booking      Booking[]
-  Housekeeping Housekeeping[]
+  bookings     Booking[]
+  housekeeping Housekeeping[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
 
@@ -56,8 +56,7 @@ model Guest {
   city          String
   postalCode    String
   status        GuestStatus @default(ACTIVE)
-  bookingsCount Int
-  Booking       Booking[]
+  bookings      Booking[]
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 }

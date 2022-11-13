@@ -17,3 +17,16 @@ export const roomSchema = Joi.object({
   floorNumber: Joi.number().required(),
   roomNumber: Joi.number().required()
 })
+
+export const guestSchema = Joi.object({
+  firstName: Joi.string().required(),
+  lastName: Joi.string().required(),
+  email: Joi.string().email().required(),
+  phoneNumber: Joi.string().length(10).pattern(/^[0-9]+$/),
+  country: Joi.string(),
+  address: Joi.string(),
+  latestBooking: Joi.date(),
+  city: Joi.string(),
+  postalCode: Joi.string(),
+  status: Joi.string()
+})

@@ -57,7 +57,6 @@ CREATE TABLE "Guest" (
     "city" TEXT NOT NULL,
     "postalCode" TEXT NOT NULL,
     "status" "GuestStatus" NOT NULL DEFAULT 'ACTIVE',
-    "bookingsCount" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

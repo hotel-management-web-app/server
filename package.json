@@ -19,6 +19,7 @@
     "test": "jest",
     "test:dev": "jest --watchAll",
     "migrate": "npx prisma migrate dev --name hotel",
+    "migrate:seed": "npx prisma migrate dev --name hotel && yarn seed",
     "studio": "npx prisma studio",
     "seed": "ts-node --transpile-only prisma/seed.ts"
   },
