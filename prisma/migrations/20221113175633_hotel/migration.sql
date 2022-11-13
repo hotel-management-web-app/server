@@ -146,6 +146,9 @@ CREATE TABLE "ProfileInfo" (
 -- CreateIndex
 CREATE UNIQUE INDEX "RoomType_name_key" ON "RoomType"("name");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Room_roomNumber_floorNumber_key" ON "Room"("roomNumber", "floorNumber");
+
 -- AddForeignKey
 ALTER TABLE "Room" ADD CONSTRAINT "Room_roomTypeId_fkey" FOREIGN KEY ("roomTypeId") REFERENCES "RoomType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 

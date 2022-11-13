@@ -35,6 +35,8 @@ model Room {
   Housekeeping Housekeeping[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
+
+  @@unique([roomNumber, floorNumber])
 }
 
 enum RoomStatus {
