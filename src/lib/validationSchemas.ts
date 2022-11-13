@@ -10,3 +10,10 @@ export const roomTypeSchema = Joi.object({
   roomImage: Joi.string(),
   roomImages: Joi.array().items(Joi.string()),
 });
+
+export const roomSchema = Joi.object({
+  roomStatus: Joi.string(),
+  roomTypeId: Joi.number().required(),
+  floorNumber: Joi.number().required(),
+  roomNumber: Joi.number().required()
+})
