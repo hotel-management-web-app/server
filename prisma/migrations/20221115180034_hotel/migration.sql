@@ -8,9 +8,6 @@ CREATE TYPE "GuestStatus" AS ENUM ('ACTIVE', 'INACTIVE');
 CREATE TYPE "BookingStatus" AS ENUM ('CONFIRMED', 'NOT_CONFIRMED', 'PENDING', 'CANCELLED');
 
 -- CreateEnum
-CREATE TYPE "PaymentMethod" AS ENUM ('BANK_ACCOUNT', 'CASH');
-
--- CreateEnum
 CREATE TYPE "HousekeepingStatus" AS ENUM ('CLEAN', 'CLEANING', 'DIRTY', 'OUT_OF_SERVICE');
 
 -- CreateEnum
@@ -51,12 +48,8 @@ CREATE TABLE "Guest" (
     "lastName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
-    "country" TEXT NOT NULL,
-    "address" TEXT NOT NULL,
-    "latestBooking" TIMESTAMP(3) NOT NULL,
-    "city" TEXT NOT NULL,
-    "postalCode" TEXT NOT NULL,
     "status" "GuestStatus" NOT NULL DEFAULT 'ACTIVE',
+    "lastBooking" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -69,8 +62,6 @@ CREATE TABLE "Booking" (
     "status" "BookingStatus" NOT NULL DEFAULT 'CONFIRMED',
     "arrivalDate" TIMESTAMP(3) NOT NULL,
     "departureDate" TIMESTAMP(3) NOT NULL,
-    "paymentMethod" "PaymentMethod" NOT NULL DEFAULT 'BANK_ACCOUNT',
-    "roomTypeId" INTEGER NOT NULL,
     "roomId" INTEGER NOT NULL,
     "adults" INTEGER NOT NULL,
     "children" INTEGER NOT NULL,
@@ -150,9 +141,6 @@ CREATE UNIQUE INDEX "Room_roomNumber_floorNumber_key" ON "Room"("roomNumber", "f
 
 -- AddForeignKey
 ALTER TABLE "Room" ADD CONSTRAINT "Room_roomTypeId_fkey" FOREIGN KEY ("roomTypeId") REFERENCES "RoomType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Booking" ADD CONSTRAINT "Booking_roomTypeId_fkey" FOREIGN KEY ("roomTypeId") REFERENCES "RoomType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Booking" ADD CONSTRAINT "Booking_roomId_fkey" FOREIGN KEY ("roomId") REFERENCES "Room"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

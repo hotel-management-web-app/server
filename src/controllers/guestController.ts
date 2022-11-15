@@ -11,7 +11,7 @@ export const getGuests = asyncHandler(async (req, res) => {
 
 export const getGuest = asyncHandler(async (req, res, next) => {
   const id = Number(req.params.id);
-  const guest = await prisma.room.findUnique({
+  const guest = await prisma.guest.findUnique({
     where: {
       id: id,
     },
@@ -29,7 +29,7 @@ export const createGuest = asyncHandler(async (req, res) => {
 
   validator.showErrors(res);
 
-  const guest = await prisma.room.create({ data: req.body });
+  const guest = await prisma.guest.create({ data: req.body });
   res.send(guest);
 });
 

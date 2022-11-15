@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi from 'joi';
 
 export const roomTypeSchema = Joi.object({
   name: Joi.string().min(3).max(48).required(),
@@ -15,18 +15,26 @@ export const roomSchema = Joi.object({
   roomStatus: Joi.string(),
   roomTypeId: Joi.number().required(),
   floorNumber: Joi.number().required(),
-  roomNumber: Joi.number().required()
-})
+  roomNumber: Joi.number().required(),
+});
 
 export const guestSchema = Joi.object({
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
   email: Joi.string().email().required(),
-  phoneNumber: Joi.string().length(10).pattern(/^[0-9]+$/),
-  country: Joi.string(),
-  address: Joi.string(),
-  latestBooking: Joi.date(),
+  phoneNumber: Joi.string()
+    .length(10)
+    .pattern(/^[0-9]+$/),
+  lastBooking: Joi.date(),
   city: Joi.string(),
-  postalCode: Joi.string(),
-  status: Joi.string()
-})
+  status: Joi.string(),
+});
+
+export const bookingSchema = Joi.object({
+  status: Joi.string(),
+  arrivalDate: Joi.date().required(),
+  departureDate: Joi.date().required(),
+  roomId: Joi.number().required(),
+  adults: Joi.number().required(),
+  children: Joi.number().required(),
+});

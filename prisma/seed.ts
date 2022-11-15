@@ -26,13 +26,9 @@ async function main() {
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
         phoneNumber: faker.phone.number(),
-        country: faker.address.country(),
-        address: faker.address.streetAddress(),
-        latestBooking: faker.date.future(),
-        city: faker.address.city(),
-        postalCode: faker.address.zipCode(),
-      }
-    })
+        lastBooking: faker.date.future(),
+      },
+    });
   }
 }
 
