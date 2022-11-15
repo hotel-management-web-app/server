@@ -2,16 +2,16 @@
 CREATE TYPE "RoomStatus" AS ENUM ('RESERVED', 'VACANT');
 
 -- CreateEnum
-CREATE TYPE "GuestStatus" AS ENUM ('ACTIVE', 'INACTIVE');
-
--- CreateEnum
-CREATE TYPE "BookingStatus" AS ENUM ('CONFIRMED', 'NOT_CONFIRMED', 'PENDING', 'CANCELLED');
-
--- CreateEnum
 CREATE TYPE "HousekeepingStatus" AS ENUM ('CLEAN', 'CLEANING', 'DIRTY', 'OUT_OF_SERVICE');
 
 -- CreateEnum
 CREATE TYPE "PriorityStatus" AS ENUM ('HIGH', 'MEDIUM', 'LOW');
+
+-- CreateEnum
+CREATE TYPE "GuestStatus" AS ENUM ('ACTIVE', 'INACTIVE');
+
+-- CreateEnum
+CREATE TYPE "BookingStatus" AS ENUM ('CONFIRMED', 'NOT_CONFIRMED', 'PENDING', 'CANCELLED');
 
 -- CreateTable
 CREATE TABLE "RoomType" (
@@ -35,6 +35,9 @@ CREATE TABLE "Room" (
     "roomNumber" INTEGER NOT NULL,
     "floorNumber" INTEGER NOT NULL,
     "roomStatus" "RoomStatus" NOT NULL DEFAULT 'VACANT',
+    "housekeepingStatus" "HousekeepingStatus" NOT NULL DEFAULT 'CLEAN',
+    "priority" "PriorityStatus" NOT NULL DEFAULT 'HIGH',
+    "comments" TEXT NOT NULL DEFAULT '',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -70,19 +73,6 @@ CREATE TABLE "Booking" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Booking_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Housekeeping" (
-    "id" SERIAL NOT NULL,
-    "roomId" INTEGER NOT NULL,
-    "housekeepingStatus" "HousekeepingStatus" NOT NULL DEFAULT 'CLEAN',
-    "priorityStatus" "PriorityStatus" NOT NULL DEFAULT 'HIGH',
-    "comments" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Housekeeping_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -147,9 +137,6 @@ ALTER TABLE "Booking" ADD CONSTRAINT "Booking_roomId_fkey" FOREIGN KEY ("roomId"
 
 -- AddForeignKey
 ALTER TABLE "Booking" ADD CONSTRAINT "Booking_guestId_fkey" FOREIGN KEY ("guestId") REFERENCES "Guest"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Housekeeping" ADD CONSTRAINT "Housekeeping_roomId_fkey" FOREIGN KEY ("roomId") REFERENCES "Room"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AboutDetail" ADD CONSTRAINT "AboutDetail_aboutInfoId_fkey" FOREIGN KEY ("aboutInfoId") REFERENCES "AboutInfo"("id") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -24,16 +24,18 @@ model RoomType {
 }
 
 model Room {
-  id           Int            @id @default(autoincrement())
-  roomType     RoomType       @relation(fields: [roomTypeId], references: [id])
-  roomTypeId   Int
-  roomNumber   Int
-  floorNumber  Int
-  roomStatus   RoomStatus     @default(VACANT)
-  bookings     Booking[]
-  housekeeping Housekeeping[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  id                 Int                @id @default(autoincrement())
+  roomType           RoomType           @relation(fields: [roomTypeId], references: [id])
+  roomTypeId         Int
+  roomNumber         Int
+  floorNumber        Int
+  roomStatus         RoomStatus         @default(VACANT)
+  bookings           Booking[]
+  housekeepingStatus HousekeepingStatus @default(CLEAN)
+  priority           PriorityStatus     @default(HIGH)
+  comments           String             @default("")
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
 
   @@unique([roomNumber, floorNumber])
 }
@@ -41,6 +43,19 @@ model Room {
 enum RoomStatus {
   RESERVED
   VACANT
+}
+
+enum HousekeepingStatus {
+  CLEAN
+  CLEANING
+  DIRTY
+  OUT_OF_SERVICE
+}
+
+enum PriorityStatus {
+  HIGH
+  MEDIUM
+  LOW
 }
 
 model Guest {
@@ -81,30 +96,6 @@ enum BookingStatus {
   NOT_CONFIRMED
   PENDING
   CANCELLED
-}
-
-model Housekeeping {
-  id                 Int                @id @default(autoincrement())
-  room               Room               @relation(fields: [roomId], references: [id])
-  roomId             Int
-  housekeepingStatus HousekeepingStatus @default(CLEAN)
-  priorityStatus     PriorityStatus     @default(HIGH)
-  comments           String
-  createdAt          DateTime           @default(now())
-  updatedAt          DateTime           @updatedAt
-}
-
-enum HousekeepingStatus {
-  CLEAN
-  CLEANING
-  DIRTY
-  OUT_OF_SERVICE
-}
-
-enum PriorityStatus {
-  HIGH
-  MEDIUM
-  LOW
 }
 
 model GeneralSettings {
