@@ -21,7 +21,9 @@
     "migrate": "npx prisma migrate dev --name hotel",
     "migrate:seed": "npx prisma migrate dev --name hotel && yarn seed",
     "studio": "npx prisma studio",
-    "seed": "ts-node --transpile-only prisma/seed.ts"
+    "db:reset": "npx prisma migrate reset",
+    "seed": "ts-node --transpile-only prisma/seed.ts",
+    "seed:reset": "yarn db:reset && yarn seed"
   },
   "husky": {
     "hooks": {
