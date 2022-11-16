@@ -38,3 +38,8 @@ export const bookingSchema = Joi.object({
   adults: Joi.number().required(),
   children: Joi.number().required(),
 });
+
+export const aboutInfoSchema = Joi.object({
+  title: Joi.string().required(),
+  description: Joi.string().allow('')
+})

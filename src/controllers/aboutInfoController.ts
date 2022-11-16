@@ -1,15 +1,15 @@
 import asyncHandler from 'express-async-handler';
 import prisma from '../lib/prisma';
-import { bookingSchema } from '../lib/validationSchemas';
+import { aboutInfoSchema } from '../lib/validationSchemas';
 import Validator from '../utils/validator';
 
 export const getAboutInfo = asyncHandler(async (req, res) => {
-  const aboutInfo = await prisma.aboutInfo.findMany();
+  const aboutInfo = await prisma.aboutInfo.findFirst();
   res.send(aboutInfo);
 });
 
 export const updateAboutInfo = asyncHandler(async (req, res) => {
-  const validator = new Validator(bookingSchema, req.body);
+  const validator = new Validator(aboutInfoSchema, req.body);
 
   validator.showErrors(res);
 

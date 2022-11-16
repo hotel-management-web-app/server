@@ -29,7 +29,24 @@ async function main() {
         lastBooking: faker.date.future(),
       },
     });
+
+    await prisma.booking.create({
+      data: {
+        arrivalDate: faker.date.future(),
+        departureDate: faker.date.future(),
+        roomId: i + 1,
+        adults: 1,
+        children: 0,
+        guestId: i + 1,
+      },
+    });
   }
+  await prisma.aboutInfo.create({
+    data: {
+      title: '',
+      description: ''
+    },
+  });
 }
 
 main()
