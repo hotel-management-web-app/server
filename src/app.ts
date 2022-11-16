@@ -5,6 +5,7 @@ import roomRoute from './routes/roomRoute';
 import guestRoute from './routes/guestRoute';
 import bookingRoute from './routes/bookingRoute';
 import aboutInfoRoute from './routes/aboutInfoRoute';
+import aboutDetailRoute from './routes/aboutDetailRoute';
 
 const port = 5000;
 
@@ -18,6 +19,7 @@ app.use('/api/rooms', roomRoute);
 app.use('/api/guests', guestRoute);
 app.use('/api/bookings', bookingRoute);
 app.use('/api/about-info', aboutInfoRoute);
+app.use('/api/about-details', aboutDetailRoute);
 
 app.use(errorHandler);
 
