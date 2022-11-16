@@ -102,8 +102,8 @@ CREATE TABLE "AboutInfo" (
 -- CreateTable
 CREATE TABLE "AboutDetail" (
     "id" SERIAL NOT NULL,
-    "title" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
+    "title" TEXT NOT NULL DEFAULT '',
+    "description" TEXT NOT NULL DEFAULT '',
     "aboutInfoId" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
