@@ -40,11 +40,18 @@ async function main() {
         guestId: i + 1,
       },
     });
+
+    await prisma.aboutDetail.create({
+      data: {
+        title: faker.word.noun(),
+        description: faker.lorem.sentences(3)
+      }
+    })
   }
   await prisma.aboutInfo.create({
     data: {
-      title: '',
-      description: ''
+      title: 'Hotel',
+      description: 'Welcome to our hotel'
     },
   });
 }
