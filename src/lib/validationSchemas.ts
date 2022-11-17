@@ -43,3 +43,10 @@ export const aboutInfoSchema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().allow('')
 })
+
+export const generalSettingsSchema = Joi.object({
+  hotelName: Joi.string().required(),
+  country: Joi.string().required(),
+  email: Joi.string().email().required(),
+  phoneNumber: Joi.string().required(),
+})

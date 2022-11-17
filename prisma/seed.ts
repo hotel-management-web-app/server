@@ -44,14 +44,23 @@ async function main() {
     await prisma.aboutDetail.create({
       data: {
         title: faker.word.noun(),
-        description: faker.lorem.sentences(3)
-      }
-    })
+        description: faker.lorem.sentences(3),
+      },
+    });
   }
   await prisma.aboutInfo.create({
     data: {
       title: 'Hotel',
-      description: 'Welcome to our hotel'
+      description: 'Welcome to our hotel',
+    },
+  });
+
+  await prisma.generalSettings.create({
+    data: {
+      hotelName: 'Hotel',
+      country: 'Poland',
+      email: 'hotel@example.com',
+      phoneNumber: '123456789',
     },
   });
 }
