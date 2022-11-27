@@ -6,7 +6,16 @@ const suffix = '/room-types/';
 describe('Check room type endpoints', () => {
   let id: number;
   it('GET Request', (done) => {
-    request(BASE_URL).get(suffix).expect(200, done);
+    request(BASE_URL)
+      .get(suffix)
+      .expect(200, done)
+      .end((err, res) => {
+        if (err) {
+          console.log(res.body);
+          return done(err);
+        }
+        return done();
+      });
   });
 
   it('POST Request', (done) => {
@@ -20,7 +29,10 @@ describe('Check room type endpoints', () => {
       })
       .expect(200)
       .end((err, res) => {
-        if (err) return done(err);
+        if (err) {
+          console.log(res.body);
+          return done(err);
+        }
         id = res.body.id;
         return done();
       });
@@ -37,7 +49,10 @@ describe('Check room type endpoints', () => {
       })
       .expect(200)
       .end((err, res) => {
-        if (err) return done(err);
+        if (err) {
+          console.log(res.body);
+          return done(err);
+        }
         id = res.body.id;
         return done();
       });
@@ -46,10 +61,12 @@ describe('Check room type endpoints', () => {
   it('Delete Request', (done) => {
     request(BASE_URL)
       .delete(suffix + id)
-      .send({})
       .expect(200)
-      .end((err) => {
-        if (err) return done(err);
+      .end((err, res) => {
+        if (err) {
+          console.log(res.body);
+          return done(err);
+        }
         return done();
       });
   });
