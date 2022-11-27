@@ -8,7 +8,7 @@ describe('Check room type endpoints', () => {
   it('GET Request', (done) => {
     request(BASE_URL)
       .get(suffix)
-      .expect(200, done)
+      .expect(200)
       .end((err, res) => {
         if (err) {
           console.log(res.body);

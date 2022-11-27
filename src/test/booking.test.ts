@@ -3,7 +3,7 @@ import { BASE_URL } from '../constants';
 
 const suffix = '/bookings/';
 
-describe('Check guest endpoints', () => {
+describe('Check booking endpoints', () => {
   let id: number;
   it('GET Request', (done) => {
     request(BASE_URL)
@@ -54,6 +54,7 @@ describe('Check guest endpoints', () => {
       .expect(200)
       .end((err, res) => {
         if (err) {
+          console.log(res.body)
           return done(err);
         }
         return done();
