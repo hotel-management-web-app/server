@@ -37,6 +37,7 @@ export const bookingSchema = Joi.object({
   roomId: Joi.number().required(),
   adults: Joi.number().required(),
   children: Joi.number().required(),
+  guestId: Joi.number()
 });
 
 export const aboutInfoSchema = Joi.object({
