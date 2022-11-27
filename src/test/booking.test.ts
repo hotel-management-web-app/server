@@ -40,6 +40,19 @@ describe('Check booking endpoints', () => {
       });
   });
 
+  it('GET by id Request', (done) => {
+    request(BASE_URL)
+      .get(suffix + id)
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          console.log(res.body);
+          return done(err);
+        }
+        return done();
+      });
+  });
+
   it('Put Request', (done) => {
     request(BASE_URL)
       .put(suffix + id)
