@@ -1,7 +1,12 @@
-import { expect } from "chai";
+import request from 'supertest';
 
-describe('Test test', () => {
-  it('test successfull', () => {
-    expect(2 + 2).equals(4)
+describe('Check room type api', () => {
+  it('GET Request', () => {
+    request('http://localhost:5000/api')
+      .get('/room-types')
+      .expect(200)
+      .end((err) => {
+        if (err) throw err;
+      });
   });
 });

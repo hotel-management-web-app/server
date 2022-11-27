@@ -26,3 +26,5 @@ app.use('/api/general-settings', generalSettingsRoute);
 app.use(errorHandler);
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
+
+export default app
