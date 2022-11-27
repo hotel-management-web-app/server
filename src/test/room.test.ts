@@ -1,9 +1,9 @@
 import request from 'supertest';
 import { BASE_URL } from '../constants';
 
-const suffix = '/room-types/';
+const suffix = '/rooms/';
 
-describe('Check room type endpoints', () => {
+describe('Check room endpoints', () => {
   let id: number;
   it('GET Request', (done) => {
     request(BASE_URL).get(suffix).expect(200, done);
@@ -13,10 +13,9 @@ describe('Check room type endpoints', () => {
     request(BASE_URL)
       .post(suffix)
       .send({
-        name: 'sdfsdfsdf',
-        description: 'Room',
-        occupancy: 2,
-        price: 1231,
+        roomTypeId: 1,
+        roomNumber: 20,
+        floorNumber: 20,
       })
       .expect(200)
       .end((err, res) => {
@@ -30,10 +29,9 @@ describe('Check room type endpoints', () => {
     request(BASE_URL)
       .put(suffix + id)
       .send({
-        name: 'sdfsdfsdfdsdf',
-        description: 'Room',
-        occupancy: 2,
-        price: 1231,
+        roomTypeId: 1,
+        roomNumber: 21,
+        floorNumber: 20,
       })
       .expect(200)
       .end((err, res) => {
