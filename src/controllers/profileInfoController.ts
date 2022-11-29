@@ -13,13 +13,14 @@ export const updateProfileInfo = asyncHandler(async (req, res) => {
 
   validator.showErrors(res);
 
+  
   const profileInfo = await prisma.profileInfo.upsert({
     where: {
       id: 1,
     },
     update: req.body,
     create: {
-      title: 'Admin',
+      name: 'Admin',
       email: 'admin@admin.com',
       phoneNumber: '123456789',
     },
