@@ -67,7 +67,7 @@ describe('Check booking endpoints', () => {
       .expect(200)
       .end((err, res) => {
         if (err) {
-          console.log(res.body)
+          console.log(res.body);
           return done(err);
         }
         return done();
