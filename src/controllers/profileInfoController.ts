@@ -13,7 +13,6 @@ export const updateProfileInfo = asyncHandler(async (req, res) => {
 
   validator.showErrors(res);
 
-  
   const profileInfo = await prisma.profileInfo.upsert({
     where: {
       id: 1,

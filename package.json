@@ -65,8 +65,8 @@
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
-      "yarn lint",
-      "yarn prettier-format"
+      "yarn lint --fix",
+      "yarn prettier-format:win32"
     ]
   },
   "dependencies": {
