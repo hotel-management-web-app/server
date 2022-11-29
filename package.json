@@ -25,11 +25,6 @@
     "seed": "ts-node --transpile-only prisma/seed.ts",
     "seed:reset": "yarn db:reset && yarn seed"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run test && npm run prettier-format && npm run lint"
-    }
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hotel-management-web-app/server.git"
