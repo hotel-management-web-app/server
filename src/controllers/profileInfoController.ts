@@ -19,7 +19,7 @@ export const updateProfileInfo = asyncHandler(async (req, res) => {
     },
     update: req.body,
     create: {
-      name: 'Admin',
+      title: 'Admin',
       email: 'admin@admin.com',
       phoneNumber: '123456789',
     },
