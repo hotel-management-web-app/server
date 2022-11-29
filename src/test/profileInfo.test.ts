@@ -1,9 +1,9 @@
 import request from 'supertest';
 import { BASE_URL } from '../constants';
 
-const suffix = '/about-info/';
+const suffix = '/profile-info/';
 
-describe('Check about info endpoints', () => {
+describe('Check profile info endpoints', () => {
   it('GET Request', (done) => {
     request(BASE_URL)
       .get(suffix)
@@ -21,8 +21,9 @@ describe('Check about info endpoints', () => {
     request(BASE_URL)
       .put(suffix)
       .send({
-        title: 'Hotel',
-        description: 'Welcome to our hotel',
+        name: 'Admin',
+        email: 'admin@admin.com',
+        phoneNumber: '123456789',
       })
       .expect(200)
       .end((err, res) => {

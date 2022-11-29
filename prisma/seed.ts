@@ -48,6 +48,7 @@ async function main() {
       },
     });
   }
+
   await prisma.aboutInfo.create({
     data: {
       title: 'Hotel',
@@ -60,6 +61,14 @@ async function main() {
       hotelName: 'Hotel',
       country: 'Poland',
       email: 'hotel@example.com',
+      phoneNumber: '123456789',
+    },
+  });
+
+  await prisma.profileInfo.create({
+    data: {
+      name: 'Admin',
+      email: 'admin@admin.com',
       phoneNumber: '123456789',
     },
   });

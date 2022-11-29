@@ -7,6 +7,7 @@ import bookingRoute from './routes/bookingRoute';
 import aboutInfoRoute from './routes/aboutInfoRoute';
 import aboutDetailRoute from './routes/aboutDetailRoute';
 import generalSettingsRoute from './routes/generalSettingsRoute';
+import profileInfoRoute from './routes/profileInfoRoute';
 import { port } from './constants';
 
 const app = express();
@@ -21,9 +22,10 @@ app.use('/api/bookings', bookingRoute);
 app.use('/api/about-info', aboutInfoRoute);
 app.use('/api/about-details', aboutDetailRoute);
 app.use('/api/general-settings', generalSettingsRoute);
+app.use('/api/profile-info', profileInfoRoute);
 
 app.use(errorHandler);
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
 
-export default app
+export default app;
