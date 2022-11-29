@@ -51,3 +51,9 @@ export const generalSettingsSchema = Joi.object({
   email: Joi.string().email().required(),
   phoneNumber: Joi.string().required(),
 })
+
+export const profileInfoSchema = Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string().required(),
+  phoneNumber: Joi.string().required()
+})
