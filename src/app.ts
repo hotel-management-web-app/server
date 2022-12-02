@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { errorHandler } from './middleware/errorMiddleware';
 import roomTypeRoute from './routes/roomTypeRoute';
 import roomRoute from './routes/roomRoute';
@@ -12,6 +13,7 @@ import { port } from './constants';
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
