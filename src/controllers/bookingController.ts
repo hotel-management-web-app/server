@@ -5,7 +5,11 @@ import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
 export const getBookings = asyncHandler(async (req, res) => {
-  const bookings = await prisma.booking.findMany();
+  const bookings = await prisma.booking.findMany({
+    orderBy: {
+      id: 'asc',
+    },
+  });
   res.send(bookings);
 });
 

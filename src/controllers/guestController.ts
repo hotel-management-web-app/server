@@ -5,7 +5,18 @@ import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
 export const getGuests = asyncHandler(async (req, res) => {
-  const guests = await prisma.guest.findMany();
+  const guests = await prisma.guest.findMany({
+    orderBy: {
+      id: 'asc',
+    },
+    include: {
+      _count: {
+        select: {
+          bookings: true,
+        },
+      },
+    },
+  });
   res.send(guests);
 });
 
