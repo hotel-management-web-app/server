@@ -9,6 +9,19 @@ export const getBookings = asyncHandler(async (req, res) => {
     orderBy: {
       id: 'asc',
     },
+    include: {
+      room: {
+        select: {
+          roomNumber: true,
+        },
+      },
+      guest: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
+    },
   });
   res.send(bookings);
 });
