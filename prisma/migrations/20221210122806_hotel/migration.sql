@@ -53,6 +53,7 @@ CREATE TABLE "Guest" (
     "phoneNumber" TEXT NOT NULL,
     "status" "GuestStatus" NOT NULL DEFAULT 'ACTIVE',
     "lastBooking" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "notes" TEXT NOT NULL DEFAULT '',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

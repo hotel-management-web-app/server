@@ -26,7 +26,7 @@ export const guestSchema = Joi.object({
     .length(10)
     .pattern(/^[0-9]+$/),
   lastBooking: Joi.date(),
-  city: Joi.string(),
+  notes: Joi.string().allow(''),
   status: Joi.string(),
 });
 
