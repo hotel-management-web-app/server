@@ -9,6 +9,9 @@ export const getRoomTypes = asyncHandler(async (req, res) => {
     orderBy: {
       id: 'asc',
     },
+    include: {
+      rooms: { select: { id: true, roomNumber: true } },
+    },
   });
   res.send(roomTypes);
 });
