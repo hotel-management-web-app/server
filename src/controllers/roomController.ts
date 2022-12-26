@@ -5,7 +5,16 @@ import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
 export const getRooms = asyncHandler(async (req, res) => {
-  const rooms = await prisma.room.findMany();
+  const rooms = await prisma.room.findMany({
+    orderBy: {
+      id: 'asc',
+    },
+    include: {
+      roomType: {
+        select: { name: true },
+      },
+    },
+  });
   res.send(rooms);
 });
 
@@ -38,6 +47,16 @@ export const updateRoom = asyncHandler(async (req, res) => {
 
   validator.showErrors(res);
 
+  const room = await prisma.room.update({
+    where: {
+      id: Number(req.params.id),
+    },
+    data: req.body,
+  });
+  res.send(room);
+});
+
+export const updateRoomField = asyncHandler(async (req, res) => {
   const room = await prisma.room.update({
     where: {
       id: Number(req.params.id),

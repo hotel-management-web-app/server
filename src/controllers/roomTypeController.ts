@@ -5,7 +5,14 @@ import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
 export const getRoomTypes = asyncHandler(async (req, res) => {
-  const roomTypes = await prisma.roomType.findMany();
+  const roomTypes = await prisma.roomType.findMany({
+    orderBy: {
+      id: 'asc',
+    },
+    include: {
+      rooms: true,
+    },
+  });
   res.send(roomTypes);
 });
 

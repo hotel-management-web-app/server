@@ -5,7 +5,11 @@ import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
 export const getAboutDetails = asyncHandler(async (req, res) => {
-  const aboutDetails = await prisma.aboutDetail.findMany();
+  const aboutDetails = await prisma.aboutDetail.findMany({
+    orderBy: {
+      id: 'asc',
+    },
+  });
   res.send(aboutDetails);
 });
 

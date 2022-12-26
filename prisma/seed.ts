@@ -15,7 +15,7 @@ async function main() {
     await prisma.room.create({
       data: {
         roomTypeId: i + 1,
-        roomNumber: faker.datatype.number({ min: 1, max: 20 }),
+        roomNumber: faker.datatype.number({ min: 1, max: 100 }),
         floorNumber: faker.datatype.number({ min: 1, max: 5 }),
       },
     });

@@ -27,7 +27,7 @@ model Room {
   id                 Int                @id @default(autoincrement())
   roomType           RoomType           @relation(fields: [roomTypeId], references: [id])
   roomTypeId         Int
-  roomNumber         Int
+  roomNumber         Int                @unique
   floorNumber        Int
   roomStatus         RoomStatus         @default(VACANT)
   bookings           Booking[]
@@ -36,8 +36,6 @@ model Room {
   comments           String             @default("")
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
-
-  @@unique([roomNumber, floorNumber])
 }
 
 enum RoomStatus {
@@ -67,6 +65,7 @@ model Guest {
   status      GuestStatus @default(ACTIVE)
   lastBooking DateTime    @default(now())
   bookings    Booking[]
+  notes       String      @default("")
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }

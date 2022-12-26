@@ -53,6 +53,7 @@ CREATE TABLE "Guest" (
     "phoneNumber" TEXT NOT NULL,
     "status" "GuestStatus" NOT NULL DEFAULT 'ACTIVE',
     "lastBooking" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "notes" TEXT NOT NULL DEFAULT '',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -127,7 +128,7 @@ CREATE TABLE "ProfileInfo" (
 CREATE UNIQUE INDEX "RoomType_name_key" ON "RoomType"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Room_roomNumber_floorNumber_key" ON "Room"("roomNumber", "floorNumber");
+CREATE UNIQUE INDEX "Room_roomNumber_key" ON "Room"("roomNumber");
 
 -- AddForeignKey
 ALTER TABLE "Room" ADD CONSTRAINT "Room_roomTypeId_fkey" FOREIGN KEY ("roomTypeId") REFERENCES "RoomType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
