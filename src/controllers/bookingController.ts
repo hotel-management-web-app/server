@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import prisma from '../lib/prisma';
-import { bookingSchema } from '../lib/validationSchemas';
+import { bookingSchema, guestSchema } from '../lib/validationSchemas';
 import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
@@ -32,6 +32,11 @@ export const getBooking = asyncHandler(async (req, res, next) => {
     where: {
       id: id,
     },
+    include: {
+      room: {
+        include: { roomType: { include: { rooms: true } } },
+      },
+    },
   });
 
   if (!booking) {
@@ -47,6 +52,22 @@ export const createBooking = asyncHandler(async (req, res) => {
   validator.showErrors(res);
 
   const booking = await prisma.booking.create({ data: req.body });
+  res.send(booking);
+});
+
+export const createBookingWithGuest = asyncHandler(async (req, res) => {
+  const validator = new Validator(guestSchema, req.body);
+
+  validator.showErrors(res);
+
+  const booking = await prisma.guest.create({
+    data: {
+      ...req.body,
+      bookings: {
+        create: req.body.booking,
+      },
+    },
+  });
   res.send(booking);
 });
 

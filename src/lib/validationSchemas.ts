@@ -18,6 +18,16 @@ export const roomSchema = Joi.object({
   roomNumber: Joi.number().required(),
 });
 
+export const bookingSchema = Joi.object({
+  status: Joi.string(),
+  arrivalDate: Joi.date().required(),
+  departureDate: Joi.date().required(),
+  roomId: Joi.number().required(),
+  adults: Joi.number().required(),
+  children: Joi.number().required(),
+  guestId: Joi.number(),
+});
+
 export const guestSchema = Joi.object({
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
@@ -28,16 +38,7 @@ export const guestSchema = Joi.object({
   lastBooking: Joi.date(),
   notes: Joi.string().allow(''),
   status: Joi.string(),
-});
-
-export const bookingSchema = Joi.object({
-  status: Joi.string(),
-  arrivalDate: Joi.date().required(),
-  departureDate: Joi.date().required(),
-  roomId: Joi.number().required(),
-  adults: Joi.number().required(),
-  children: Joi.number().required(),
-  guestId: Joi.number(),
+  booking: bookingSchema,
 });
 
 export const aboutInfoSchema = Joi.object({
