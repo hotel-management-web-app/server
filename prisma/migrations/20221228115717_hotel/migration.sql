@@ -103,6 +103,7 @@ CREATE TABLE "AboutInfo" (
 -- CreateTable
 CREATE TABLE "AboutDetail" (
     "id" SERIAL NOT NULL,
+    "image" TEXT NOT NULL,
     "title" TEXT NOT NULL DEFAULT '',
     "description" TEXT NOT NULL DEFAULT '',
     "aboutInfoId" INTEGER,

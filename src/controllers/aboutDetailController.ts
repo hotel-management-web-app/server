@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import prisma from '../lib/prisma';
-import { aboutInfoSchema } from '../lib/validationSchemas';
+import { aboutDetailSchema } from '../lib/validationSchemas';
 import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
@@ -29,18 +29,24 @@ export const getAboutDetail = asyncHandler(async (req, res, next) => {
 });
 
 export const createAboutDetail = asyncHandler(async (req, res) => {
-  const validator = new Validator(aboutInfoSchema, req.body);
+  const data = JSON.parse(req.body.data);
+  const protocol = req.protocol;
+  const host = req.headers.host;
+  const imageName = req.file?.filename;
+  const imageUrl = `${protocol}://${host}/${imageName}`;
+
+  const validator = new Validator(aboutDetailSchema, data);
 
   validator.showErrors(res);
 
   const aboutDetail = await prisma.aboutDetail.create({
-    data: { ...req.body, aboutInfoId: 1 },
+    data: { ...data, image: imageUrl, aboutInfoId: 1 },
   });
   res.send(aboutDetail);
 });
 
 export const updateAboutDetail = asyncHandler(async (req, res) => {
-  const validator = new Validator(aboutInfoSchema, req.body);
+  const validator = new Validator(aboutDetailSchema, req.body);
 
   validator.showErrors(res);
 

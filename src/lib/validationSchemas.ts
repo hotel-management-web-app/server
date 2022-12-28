@@ -46,6 +46,11 @@ export const aboutInfoSchema = Joi.object({
   description: Joi.string().allow(''),
 });
 
+export const aboutDetailSchema = Joi.object({
+  title: Joi.string().required(),
+  description: Joi.string().allow(''),
+});
+
 export const generalSettingsSchema = Joi.object({
   hotelName: Joi.string().required(),
   country: Joi.string().required(),

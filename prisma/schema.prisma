@@ -118,6 +118,7 @@ model AboutInfo {
 
 model AboutDetail {
   id          Int        @id @default(autoincrement())
+  image       String
   title       String     @default("")
   description String     @default("")
   AboutInfo   AboutInfo? @relation(fields: [aboutInfoId], references: [id])

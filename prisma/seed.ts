@@ -43,6 +43,7 @@ async function main() {
 
     await prisma.aboutDetail.create({
       data: {
+        image: faker.image.city(300, 300),
         title: faker.word.noun(),
         description: faker.lorem.sentences(3),
       },
