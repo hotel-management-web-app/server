@@ -48,7 +48,14 @@ export const createAboutDetail = asyncHandler(async (req, res) => {
 });
 
 export const updateAboutDetail = asyncHandler(async (req, res) => {
-  const validator = new Validator(aboutDetailSchema, req.body);
+  const data = JSON.parse(req.body.data);
+  const protocol = req.protocol;
+  const host = req.headers.host;
+
+  const imageName = req.file?.filename ?? 'images/no_image.jpg';
+  const imageUrl = `${protocol}://${host}/${imageName} `;
+
+  const validator = new Validator(aboutDetailSchema, data);
 
   validator.showErrors(res);
 
@@ -56,7 +63,7 @@ export const updateAboutDetail = asyncHandler(async (req, res) => {
     where: {
       id: Number(req.params.id),
     },
-    data: req.body,
+    data: { ...data, image: imageUrl },
   });
   res.send(aboutDetail);
 });

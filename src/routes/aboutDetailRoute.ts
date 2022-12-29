@@ -21,7 +21,7 @@ router
 router
   .route('/:id')
   .get(getAboutDetail)
-  .put(updateAboutDetail)
+  .put(upload.single('image'), updateAboutDetail)
   .delete(deleteAboutDetail);
 
 export default router;
