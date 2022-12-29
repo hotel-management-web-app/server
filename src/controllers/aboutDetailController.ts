@@ -3,6 +3,7 @@ import prisma from '../lib/prisma';
 import { aboutDetailSchema } from '../lib/validationSchemas';
 import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
+import fs from 'fs';
 
 export const getAboutDetails = asyncHandler(async (req, res) => {
   const aboutDetails = await prisma.aboutDetail.findMany({
@@ -32,8 +33,9 @@ export const createAboutDetail = asyncHandler(async (req, res) => {
   const data = JSON.parse(req.body.data);
   const protocol = req.protocol;
   const host = req.headers.host;
-  const imageName = req.file?.filename;
-  const imageUrl = `${protocol}://${host}/${imageName}`;
+
+  const imageName = req.file?.filename ?? 'images/no_image.jpg';
+  const imageUrl = `${protocol}://${host}/${imageName} `;
 
   const validator = new Validator(aboutDetailSchema, data);
 
@@ -65,5 +67,13 @@ export const deleteAboutDetail = asyncHandler(async (req, res) => {
       id: Number(req.params.id),
     },
   });
+
+  if (aboutDetail.image) {
+    const imageUrl = new URL(aboutDetail.image);
+    if (imageUrl.pathname !== '/images/no_image.jpg') {
+      const imagePath = 'public' + imageUrl.pathname;
+      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
+    }
+  }
   res.send(aboutDetail);
 });
