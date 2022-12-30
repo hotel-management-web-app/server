@@ -3,7 +3,8 @@ import prisma from '../lib/prisma';
 import { aboutDetailSchema } from '../lib/validationSchemas';
 import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
-import fs from 'fs';
+import { deleteImage } from '../utils/deleteImage';
+import { createImageUrl } from '../utils/createImageUrl';
 
 export const getAboutDetails = asyncHandler(async (req, res) => {
   const aboutDetails = await prisma.aboutDetail.findMany({
@@ -31,11 +32,7 @@ export const getAboutDetail = asyncHandler(async (req, res, next) => {
 
 export const createAboutDetail = asyncHandler(async (req, res) => {
   const data = JSON.parse(req.body.data);
-  const protocol = req.protocol;
-  const host = req.headers.host;
-
-  const imageName = req.file?.filename ?? 'images/no_image.jpg';
-  const imageUrl = `${protocol}://${host}/${imageName} `;
+  const imageUrl = createImageUrl(req);
 
   const validator = new Validator(aboutDetailSchema, data);
 
@@ -48,24 +45,29 @@ export const createAboutDetail = asyncHandler(async (req, res) => {
 });
 
 export const updateAboutDetail = asyncHandler(async (req, res) => {
-  const data = JSON.parse(req.body.data);
-  const protocol = req.protocol;
-  const host = req.headers.host;
+  const id = Number(req.params.id);
+  const aboutDetail = await prisma.aboutDetail.findUnique({
+    where: {
+      id: id,
+    },
+  });
 
-  const imageName = req.file?.filename ?? 'images/no_image.jpg';
-  const imageUrl = `${protocol}://${host}/${imageName} `;
+  if (aboutDetail && req.file) deleteImage(aboutDetail.image);
+
+  const data = JSON.parse(req.body.data);
+  const imageUrl = createImageUrl(req);
 
   const validator = new Validator(aboutDetailSchema, data);
 
   validator.showErrors(res);
 
-  const aboutDetail = await prisma.aboutDetail.update({
+  const updatedAboutDetail = await prisma.aboutDetail.update({
     where: {
-      id: Number(req.params.id),
+      id: id,
     },
-    data: { ...data, image: imageUrl },
+    data: { ...data, ...(req.file && { image: imageUrl }) },
   });
-  res.send(aboutDetail);
+  res.send(updatedAboutDetail);
 });
 
 export const deleteAboutDetail = asyncHandler(async (req, res) => {
@@ -75,12 +77,7 @@ export const deleteAboutDetail = asyncHandler(async (req, res) => {
     },
   });
 
-  if (aboutDetail.image) {
-    const imageUrl = new URL(aboutDetail.image);
-    if (imageUrl.pathname !== '/images/no_image.jpg') {
-      const imagePath = 'public' + imageUrl.pathname;
-      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
-    }
-  }
+  deleteImage(aboutDetail.image);
+
   res.send(aboutDetail);
 });
