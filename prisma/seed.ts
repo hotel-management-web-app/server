@@ -59,6 +59,7 @@ async function main() {
 
   await prisma.generalSettings.create({
     data: {
+      logo: faker.image.business(300, 300),
       hotelName: 'Hotel',
       country: 'Poland',
       email: 'hotel@example.com',

@@ -79,6 +79,7 @@ CREATE TABLE "Booking" (
 -- CreateTable
 CREATE TABLE "GeneralSettings" (
     "id" SERIAL NOT NULL,
+    "logo" TEXT NOT NULL,
     "hotelName" TEXT NOT NULL,
     "country" TEXT NOT NULL,
     "email" TEXT NOT NULL,

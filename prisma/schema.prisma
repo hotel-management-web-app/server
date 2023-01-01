@@ -99,6 +99,7 @@ enum BookingStatus {
 
 model GeneralSettings {
   id          Int      @id @default(autoincrement())
+  logo        String
   hotelName   String
   country     String
   email       String
