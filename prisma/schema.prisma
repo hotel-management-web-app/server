@@ -16,6 +16,8 @@ model RoomType {
   description String
   occupancy   Int
   price       Float
+  image       String
+  images      String[]
   amenities   String[]
   details     String[]
   rooms       Room[]

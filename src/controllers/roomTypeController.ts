@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import prisma from '../lib/prisma';
 import { roomTypeSchema } from '../lib/validationSchemas';
+import { createImageUrl } from '../utils/createImageUrl';
 import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
@@ -32,11 +33,20 @@ export const getRoomType = asyncHandler(async (req, res, next) => {
 });
 
 export const createRoomType = asyncHandler(async (req, res) => {
-  const validator = new Validator(roomTypeSchema, req.body);
+  const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+  const image = files['image'][0];
+  const images = files['images'];
+
+  const data = JSON.parse(req.body.data);
+  const imageUrl = createImageUrl(req, image);
+  const imagesUrl = images.map((image) => createImageUrl(req, image));
+  const validator = new Validator(roomTypeSchema, data);
 
   validator.showErrors(res);
 
-  const roomType = await prisma.roomType.create({ data: req.body });
+  const roomType = await prisma.roomType.create({
+    data: { ...data, image: imageUrl, images: imagesUrl },
+  });
   res.send(roomType);
 });
 

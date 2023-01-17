@@ -20,6 +20,8 @@ CREATE TABLE "RoomType" (
     "description" TEXT NOT NULL,
     "occupancy" INTEGER NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
+    "image" TEXT NOT NULL,
+    "images" TEXT[],
     "amenities" TEXT[],
     "details" TEXT[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

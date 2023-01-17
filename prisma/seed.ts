@@ -9,6 +9,7 @@ async function main() {
         description: faker.lorem.text(),
         occupancy: faker.datatype.number({ min: 1, max: 10 }),
         price: faker.datatype.number({ min: 1000, max: 2000, precision: 0.1 }),
+        image: faker.image.city(500, 300),
       },
     });
 
