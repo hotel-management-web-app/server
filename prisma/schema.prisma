@@ -16,6 +16,8 @@ model RoomType {
   description String
   occupancy   Int
   price       Float
+  image       String
+  images      String[]
   amenities   String[]
   details     String[]
   rooms       Room[]
@@ -99,6 +101,7 @@ enum BookingStatus {
 
 model GeneralSettings {
   id          Int      @id @default(autoincrement())
+  logo        String
   hotelName   String
   country     String
   email       String
@@ -118,6 +121,7 @@ model AboutInfo {
 
 model AboutDetail {
   id          Int        @id @default(autoincrement())
+  image       String
   title       String     @default("")
   description String     @default("")
   AboutInfo   AboutInfo? @relation(fields: [aboutInfoId], references: [id])

@@ -20,6 +20,8 @@ CREATE TABLE "RoomType" (
     "description" TEXT NOT NULL,
     "occupancy" INTEGER NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
+    "image" TEXT NOT NULL,
+    "images" TEXT[],
     "amenities" TEXT[],
     "details" TEXT[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -79,6 +81,7 @@ CREATE TABLE "Booking" (
 -- CreateTable
 CREATE TABLE "GeneralSettings" (
     "id" SERIAL NOT NULL,
+    "logo" TEXT NOT NULL,
     "hotelName" TEXT NOT NULL,
     "country" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -103,6 +106,7 @@ CREATE TABLE "AboutInfo" (
 -- CreateTable
 CREATE TABLE "AboutDetail" (
     "id" SERIAL NOT NULL,
+    "image" TEXT NOT NULL,
     "title" TEXT NOT NULL DEFAULT '',
     "description" TEXT NOT NULL DEFAULT '',
     "aboutInfoId" INTEGER,

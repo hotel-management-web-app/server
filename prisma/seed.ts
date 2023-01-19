@@ -9,6 +9,7 @@ async function main() {
         description: faker.lorem.text(),
         occupancy: faker.datatype.number({ min: 1, max: 10 }),
         price: faker.datatype.number({ min: 1000, max: 2000, precision: 0.1 }),
+        image: faker.image.city(500, 300),
       },
     });
 
@@ -43,6 +44,7 @@ async function main() {
 
     await prisma.aboutDetail.create({
       data: {
+        image: faker.image.city(300, 300),
         title: faker.word.noun(),
         description: faker.lorem.sentences(3),
       },
@@ -58,6 +60,7 @@ async function main() {
 
   await prisma.generalSettings.create({
     data: {
+      logo: faker.image.business(300, 300),
       hotelName: 'Hotel',
       country: 'Poland',
       email: 'hotel@example.com',

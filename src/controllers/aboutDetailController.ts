@@ -1,8 +1,10 @@
 import asyncHandler from 'express-async-handler';
 import prisma from '../lib/prisma';
-import { aboutInfoSchema } from '../lib/validationSchemas';
+import { aboutDetailSchema } from '../lib/validationSchemas';
 import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
+import { deleteImage } from '../utils/deleteImage';
+import { createImageUrl } from '../utils/createImageUrl';
 
 export const getAboutDetails = asyncHandler(async (req, res) => {
   const aboutDetails = await prisma.aboutDetail.findMany({
@@ -29,28 +31,43 @@ export const getAboutDetail = asyncHandler(async (req, res, next) => {
 });
 
 export const createAboutDetail = asyncHandler(async (req, res) => {
-  const validator = new Validator(aboutInfoSchema, req.body);
+  const data = JSON.parse(req.body.data);
+  const imageUrl = createImageUrl(req);
+
+  const validator = new Validator(aboutDetailSchema, data);
 
   validator.showErrors(res);
 
   const aboutDetail = await prisma.aboutDetail.create({
-    data: { ...req.body, aboutInfoId: 1 },
+    data: { ...data, image: imageUrl, aboutInfoId: 1 },
   });
   res.send(aboutDetail);
 });
 
 export const updateAboutDetail = asyncHandler(async (req, res) => {
-  const validator = new Validator(aboutInfoSchema, req.body);
+  const id = Number(req.params.id);
+  const aboutDetail = await prisma.aboutDetail.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  if (aboutDetail && req.file) deleteImage(aboutDetail.image);
+
+  const data = JSON.parse(req.body.data);
+  const imageUrl = createImageUrl(req);
+
+  const validator = new Validator(aboutDetailSchema, data);
 
   validator.showErrors(res);
 
-  const aboutDetail = await prisma.aboutDetail.update({
+  const updatedAboutDetail = await prisma.aboutDetail.update({
     where: {
-      id: Number(req.params.id),
+      id: id,
     },
-    data: req.body,
+    data: { ...data, ...(req.file && { image: imageUrl }) },
   });
-  res.send(aboutDetail);
+  res.send(updatedAboutDetail);
 });
 
 export const deleteAboutDetail = asyncHandler(async (req, res) => {
@@ -59,5 +76,8 @@ export const deleteAboutDetail = asyncHandler(async (req, res) => {
       id: Number(req.params.id),
     },
   });
+
+  deleteImage(aboutDetail.image);
+
   res.send(aboutDetail);
 });

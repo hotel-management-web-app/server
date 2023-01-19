@@ -2,13 +2,13 @@ import Joi from 'joi';
 
 export const roomTypeSchema = Joi.object({
   name: Joi.string().min(3).max(48).required(),
-  description: Joi.string(),
+  description: Joi.string().allow(''),
   occupancy: Joi.number().positive().required(),
   price: Joi.number().positive().required(),
   amenities: Joi.array().items(Joi.string()),
   details: Joi.array().items(Joi.string()),
-  roomImage: Joi.string(),
-  roomImages: Joi.array().items(Joi.string()),
+  image: Joi.string(),
+  images: Joi.array().items(Joi.string()),
 });
 
 export const roomSchema = Joi.object({
@@ -42,6 +42,11 @@ export const guestSchema = Joi.object({
 });
 
 export const aboutInfoSchema = Joi.object({
+  title: Joi.string().required(),
+  description: Joi.string().allow(''),
+});
+
+export const aboutDetailSchema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().allow(''),
 });
