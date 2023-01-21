@@ -79,14 +79,6 @@ async function main() {
       phoneNumber: '123456789',
     },
   });
-
-  await prisma.profileInfo.create({
-    data: {
-      name: 'Admin',
-      email: 'admin@admin.com',
-      phoneNumber: '123456789',
-    },
-  });
 }
 
 main()

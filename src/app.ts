@@ -8,7 +8,6 @@ import bookingRoute from './routes/bookingRoute';
 import aboutInfoRoute from './routes/aboutInfoRoute';
 import aboutDetailRoute from './routes/aboutDetailRoute';
 import generalSettingsRoute from './routes/generalSettingsRoute';
-import profileInfoRoute from './routes/profileInfoRoute';
 import userRoute from './routes/userRoute';
 import { port } from './constants';
 
@@ -29,7 +28,6 @@ app.use(prefix + '/bookings', bookingRoute);
 app.use(prefix + '/about-info', aboutInfoRoute);
 app.use(prefix + '/about-details', aboutDetailRoute);
 app.use(prefix + '/general-settings', generalSettingsRoute);
-app.use(prefix + '/profile-info', profileInfoRoute);
 
 app.use(errorHandler);
 
