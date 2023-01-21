@@ -1,7 +1,19 @@
 import { faker } from '@faker-js/faker';
+import argon2 from 'argon2';
 import prisma from '../src/lib/prisma';
 
 async function main() {
+  const hashedPassword = await argon2.hash('password');
+
+  await prisma.user.create({
+    data: {
+      name: 'Admin',
+      email: 'admin@example.com',
+      password: hashedPassword,
+      phoneNumber: '1234567890',
+    },
+  });
+
   for (let i = 0; i < 5; i++) {
     await prisma.roomType.create({
       data: {

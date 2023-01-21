@@ -5,6 +5,7 @@ import {
   updateGeneralSettings,
 } from '../controllers/generalSettingsController';
 import multerStorage from '../lib/multer';
+import { protect } from '../middleware/authMiddleware';
 
 const router = express.Router();
 const upload = multer({
@@ -14,6 +15,6 @@ const upload = multer({
 router
   .route('/')
   .get(getGeneralSettings)
-  .put(upload.single('logo'), updateGeneralSettings);
+  .put([protect, upload.single('logo')], updateGeneralSettings);
 
 export default router;
