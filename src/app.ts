@@ -9,6 +9,7 @@ import aboutInfoRoute from './routes/aboutInfoRoute';
 import aboutDetailRoute from './routes/aboutDetailRoute';
 import generalSettingsRoute from './routes/generalSettingsRoute';
 import profileInfoRoute from './routes/profileInfoRoute';
+import userRoute from './routes/userRoute';
 import { port } from './constants';
 
 const app = express();
@@ -18,14 +19,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
-app.use('/api/room-types', roomTypeRoute);
-app.use('/api/rooms', roomRoute);
-app.use('/api/guests', guestRoute);
-app.use('/api/bookings', bookingRoute);
-app.use('/api/about-info', aboutInfoRoute);
-app.use('/api/about-details', aboutDetailRoute);
-app.use('/api/general-settings', generalSettingsRoute);
-app.use('/api/profile-info', profileInfoRoute);
+const prefix = '/api';
+
+app.use(prefix + '/auth', userRoute);
+app.use(prefix + '/room-types', roomTypeRoute);
+app.use(prefix + '/rooms', roomRoute);
+app.use(prefix + '/guests', guestRoute);
+app.use(prefix + '/bookings', bookingRoute);
+app.use(prefix + '/about-info', aboutInfoRoute);
+app.use(prefix + '/about-details', aboutDetailRoute);
+app.use(prefix + '/general-settings', generalSettingsRoute);
+app.use(prefix + '/profile-info', profileInfoRoute);
 
 app.use(errorHandler);
 

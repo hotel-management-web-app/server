@@ -14,6 +14,19 @@ CREATE TYPE "GuestStatus" AS ENUM ('ACTIVE', 'INACTIVE');
 CREATE TYPE "BookingStatus" AS ENUM ('CONFIRMED', 'NOT_CONFIRMED', 'PENDING', 'CANCELLED');
 
 -- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "phoneNumber" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "RoomType" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
@@ -127,6 +140,9 @@ CREATE TABLE "ProfileInfo" (
 
     CONSTRAINT "ProfileInfo_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "RoomType_name_key" ON "RoomType"("name");
