@@ -49,22 +49,36 @@ export const loginUser = asyncHandler(async (req, res) => {
   });
 
   if (user && (await argon2.verify(user.password, password))) {
-    res.json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      token: generateToken(user.id),
-    });
+    const token = generateToken(user.id);
+    res
+      .cookie('token', token, {
+        httpOnly: true,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      })
+      .json({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        token,
+      });
   } else {
     res.status(400);
     throw new Error('Invalid credentials');
   }
-
-  res.send('login');
 });
 
 export const getMe = asyncHandler(async (req, res) => {
   res.send(req.user);
+});
+
+export const logout = asyncHandler(async (req, res) => {
+  res.clearCookie('token');
+  res.send('You are successfully logged out!');
+});
+
+export const getJWT = asyncHandler(async (req, res) => {
+  const token = req.cookies.token;
+  res.send({ token });
 });
 
 const generateToken = (id: number) => {
