@@ -4,7 +4,6 @@ import {
   getMe,
   registerUser,
   logout,
-  getJWT,
 } from '../controllers/userController';
 import { protect } from '../middleware/authMiddleware';
 
@@ -14,6 +13,5 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/logout', protect, logout);
 router.get('/me', protect, getMe);
-router.get('/jwt', protect, getJWT);
 
 export default router;

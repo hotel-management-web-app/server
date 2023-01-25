@@ -44,8 +44,11 @@ export const registerUser = asyncHandler(async (req, res) => {
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.update({
     where: { email },
+    data: {
+      lastLogin: new Date(Date.now()).toISOString(),
+    },
   });
 
   if (user && (await argon2.verify(user.password, password))) {
@@ -74,11 +77,6 @@ export const getMe = asyncHandler(async (req, res) => {
 export const logout = asyncHandler(async (req, res) => {
   res.clearCookie('token');
   res.send('You are successfully logged out!');
-});
-
-export const getJWT = asyncHandler(async (req, res) => {
-  const token = req.cookies.token;
-  res.send({ token });
 });
 
 const generateToken = (id: number) => {
