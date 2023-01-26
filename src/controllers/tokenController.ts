@@ -5,6 +5,6 @@ export const getJWT = asyncHandler(async (req, res) => {
   res.send({ token });
 });
 
-// export const getCSRFToken = asyncHandler(async (req, res) => {
-//   res.send({ csrfToken: req.csrfToken() });
-// });
+export const getCSRFToken = asyncHandler(async (req, res) => {
+  res.send({ csrfToken: req.csrfToken() });
+});
