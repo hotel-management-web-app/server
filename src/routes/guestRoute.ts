@@ -6,10 +6,15 @@ import {
   getGuest,
   deleteGuest,
 } from '../controllers/guestController';
+import { protect } from '../middleware/authMiddleware';
 
 const router = express.Router();
 
-router.route('/').get(getGuests).post(createGuest);
-router.route('/:id').get(getGuest).put(updateGuest).delete(deleteGuest);
+router.route('/').get(getGuests).post(protect, createGuest);
+router
+  .route('/:id')
+  .get(getGuest)
+  .put(protect, updateGuest)
+  .delete(protect, deleteGuest);
 
 export default router;

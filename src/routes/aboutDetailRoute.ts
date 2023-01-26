@@ -8,6 +8,7 @@ import {
   deleteAboutDetail,
 } from '../controllers/aboutDetailController';
 import multerStorage from '../lib/multer';
+import { protect } from '../middleware/authMiddleware';
 
 const router = express.Router();
 const upload = multer({
@@ -17,11 +18,11 @@ const upload = multer({
 router
   .route('/')
   .get(getAboutDetails)
-  .post(upload.single('image'), createAboutDetail);
+  .post([protect, upload.single('image')], createAboutDetail);
 router
   .route('/:id')
   .get(getAboutDetail)
-  .put(upload.single('image'), updateAboutDetail)
-  .delete(deleteAboutDetail);
+  .put([protect, upload.single('image')], updateAboutDetail)
+  .delete(protect, deleteAboutDetail);
 
 export default router;

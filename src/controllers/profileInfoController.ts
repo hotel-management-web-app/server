@@ -4,7 +4,19 @@ import { profileInfoSchema } from '../lib/validationSchemas';
 import Validator from '../utils/validator';
 
 export const getProfileInfo = asyncHandler(async (req, res) => {
-  const profileInfo = await prisma.profileInfo.findFirst();
+  const profileInfo = await prisma.user.findUnique({
+    where: {
+      id: req?.user?.id,
+    },
+    select: {
+      name: true,
+      email: true,
+      phoneNumber: true,
+      lastLogin: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
   res.send(profileInfo);
 });
 
@@ -13,16 +25,11 @@ export const updateProfileInfo = asyncHandler(async (req, res) => {
 
   validator.showErrors(res);
 
-  const profileInfo = await prisma.profileInfo.upsert({
+  const profileInfo = await prisma.user.update({
     where: {
-      id: 1,
+      id: req?.user?.id,
     },
-    update: req.body,
-    create: {
-      name: 'Admin',
-      email: 'admin@admin.com',
-      phoneNumber: '123456789',
-    },
+    data: req.body,
   });
   res.send(profileInfo);
 });
