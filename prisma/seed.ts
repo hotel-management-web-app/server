@@ -45,8 +45,8 @@ async function main() {
 
     await prisma.booking.create({
       data: {
-        arrivalDate: faker.date.future(),
-        departureDate: faker.date.future(),
+        arrivalDate: faker.date.soon(),
+        departureDate: faker.date.soon(10),
         roomId: i + 1,
         adults: 1,
         children: 0,
