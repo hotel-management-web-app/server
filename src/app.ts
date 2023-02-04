@@ -12,6 +12,7 @@ import aboutDetailRoute from './routes/aboutDetailRoute';
 import generalSettingsRoute from './routes/generalSettingsRoute';
 import userRoute from './routes/userRoute';
 import profileInfoRoute from './routes/profileInfoRoute';
+import dashboardRoute from './routes/dashboardRoute';
 import tokenRoute from './routes/tokenRoute';
 import { port } from './constants';
 
@@ -35,6 +36,7 @@ app.use(prefix + '/bookings', bookingRoute);
 app.use(prefix + '/about-info', aboutInfoRoute);
 app.use(prefix + '/about-details', aboutDetailRoute);
 app.use(prefix + '/general-settings', generalSettingsRoute);
+app.use(prefix + '/dashboard', dashboardRoute);
 app.use(prefix + '/', tokenRoute);
 
 app.use(errorHandler);
