@@ -7,6 +7,8 @@ export const getDashboard = asyncHandler(async (req, res) => {
   const allBookingStatusCount = await getAllBookingStatusCount();
   const allHousekeepingStatusCount = await getAllHousekeepingStatusCount();
   const arrivalsAndDeparturesToday = await getArrivalsAndDeparturesToday();
+  const availableRoomsByRoomTypeCount =
+    await getAvailableRoomsByRoomTypeCount();
 
   const dashboardData = {
     personCount,
@@ -14,6 +16,7 @@ export const getDashboard = asyncHandler(async (req, res) => {
     allBookingStatusCount,
     allHousekeepingStatusCount,
     arrivalsAndDeparturesToday,
+    availableRoomsByRoomTypeCount,
   };
 
   res.send(dashboardData);
@@ -150,4 +153,22 @@ const getAllHousekeepingStatusCount = async () => {
     dirty,
     outOfService,
   };
+};
+
+const getAvailableRoomsByRoomTypeCount = async () => {
+  const roomTypes = await prisma.roomType.findMany({
+    select: { name: true, rooms: true },
+  });
+
+  const rooms = roomTypes.map((roomType) => {
+    let count = 0;
+
+    roomType.rooms.forEach((room) => {
+      if (room.roomStatus === 'VACANT') count++;
+    });
+
+    return { name: roomType.name, count };
+  });
+
+  return rooms;
 };
