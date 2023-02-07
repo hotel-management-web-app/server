@@ -36,54 +36,54 @@ const getPersonCount = async () => {
 };
 
 const getAllRoomStatusCount = async () => {
-  const availableRooms = await prisma.room.count({
+  const available = await prisma.room.count({
     where: {
       roomStatus: 'VACANT',
     },
   });
 
-  const reservedRooms = await prisma.room.count({
+  const reserved = await prisma.room.count({
     where: {
       roomStatus: 'RESERVED',
     },
   });
 
   return {
-    availableRooms,
-    reservedRooms,
+    available,
+    reserved,
   };
 };
 
 const getAllBookingStatusCount = async () => {
-  const confirmedBookings = await prisma.booking.count({
+  const confirmed = await prisma.booking.count({
     where: {
       status: 'CONFIRMED',
     },
   });
 
-  const pendingBookings = await prisma.booking.count({
+  const pending = await prisma.booking.count({
     where: {
       status: 'PENDING',
     },
   });
 
-  const cancelledBookings = await prisma.booking.count({
+  const cancelled = await prisma.booking.count({
     where: {
       status: 'CANCELLED',
     },
   });
 
-  const notConfirmedBookings = await prisma.booking.count({
+  const notConfirmed = await prisma.booking.count({
     where: {
       status: 'NOT_CONFIRMED',
     },
   });
 
   return {
-    confirmedBookings,
-    pendingBookings,
-    cancelledBookings,
-    notConfirmedBookings,
+    confirmed,
+    pending,
+    cancelled,
+    notConfirmed,
   };
 };
 
@@ -99,6 +99,7 @@ const getArrivalsAndDeparturesToday = async () => {
     },
     include: {
       guest: true,
+      room: { include: { roomType: true } },
     },
   });
 
@@ -108,6 +109,7 @@ const getArrivalsAndDeparturesToday = async () => {
     },
     include: {
       guest: true,
+      room: { include: { roomType: true } },
     },
   });
 
@@ -118,34 +120,34 @@ const getArrivalsAndDeparturesToday = async () => {
 };
 
 const getAllHousekeepingStatusCount = async () => {
-  const cleanStatusCount = await prisma.room.count({
+  const clean = await prisma.room.count({
     where: {
       housekeepingStatus: 'CLEAN',
     },
   });
 
-  const cleaningStatusCount = await prisma.room.count({
+  const cleaning = await prisma.room.count({
     where: {
       housekeepingStatus: 'CLEANING',
     },
   });
 
-  const dirtyStatusCount = await prisma.room.count({
+  const dirty = await prisma.room.count({
     where: {
       housekeepingStatus: 'DIRTY',
     },
   });
 
-  const outOfServiceStatusCount = await prisma.room.count({
+  const outOfService = await prisma.room.count({
     where: {
       housekeepingStatus: 'OUT_OF_SERVICE',
     },
   });
 
   return {
-    cleanStatusCount,
-    cleaningStatusCount,
-    dirtyStatusCount,
-    outOfServiceStatusCount,
+    clean,
+    cleaning,
+    dirty,
+    outOfService,
   };
 };
