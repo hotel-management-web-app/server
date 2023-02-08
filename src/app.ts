@@ -14,6 +14,7 @@ import userRoute from './routes/userRoute';
 import profileInfoRoute from './routes/profileInfoRoute';
 import dashboardRoute from './routes/dashboardRoute';
 import tokenRoute from './routes/tokenRoute';
+import reportRoute from './routes/reportRoute';
 import { port } from './constants';
 
 const app = express();
@@ -37,6 +38,7 @@ app.use(prefix + '/about-info', aboutInfoRoute);
 app.use(prefix + '/about-details', aboutDetailRoute);
 app.use(prefix + '/general-settings', generalSettingsRoute);
 app.use(prefix + '/dashboard', dashboardRoute);
+app.use(prefix + '/report', reportRoute);
 app.use(prefix + '/', tokenRoute);
 
 app.use(errorHandler);
