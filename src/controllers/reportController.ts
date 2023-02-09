@@ -81,12 +81,23 @@ const getAverageInfo = (bookings: BookingWithRoom[]) => {
     childrenCount += children;
   });
 
-  const averageAdultsGuests = (adultsCount / allGuestCount).toFixed(2);
-  const averageChildrenGuests = (childrenCount / allGuestCount).toFixed(2);
+  const averageAdultsGuests =
+    Number((adultsCount / allGuestCount).toFixed(2)) * 100;
+  const averageChildrenGuests =
+    Number((childrenCount / allGuestCount).toFixed(2)) * 100;
+
+  const bookingsInfo = getReportInfo(bookings);
+  const { totalNights, guestCount } = bookingsInfo;
+  const bookingsCount = bookings.length;
+
+  const nightsPerBooking = (totalNights / bookingsCount).toFixed(2);
+  const guestsPerBooking = (guestCount / bookingsCount).toFixed(2);
 
   const averageInfo = {
     adultsGuests: `${adultsCount} (${averageAdultsGuests}%)`,
     childrenGuests: `${childrenCount} (${averageChildrenGuests}%)`,
+    nightsPerBooking,
+    guestsPerBooking,
   };
 
   return averageInfo;
