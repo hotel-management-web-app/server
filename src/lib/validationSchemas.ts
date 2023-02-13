@@ -29,8 +29,8 @@ export const bookingSchema = Joi.object({
 });
 
 export const guestSchema = Joi.object({
-  firstName: Joi.string().required(),
-  lastName: Joi.string().required(),
+  firstName: Joi.string().min(3).max(48).required(),
+  lastName: Joi.string().min(3).max(48).required(),
   email: Joi.string().email().required(),
   phoneNumber: Joi.string()
     .length(10)
@@ -60,6 +60,15 @@ export const generalSettingsSchema = Joi.object({
 
 export const profileInfoSchema = Joi.object({
   name: Joi.string().required(),
-  email: Joi.string().required(),
+  email: Joi.string().email().required(),
   phoneNumber: Joi.string().required(),
+});
+
+export const contactDataSchema = Joi.object({
+  firstName: Joi.string().min(3).max(48).required(),
+  secondName: Joi.string().min(3).max(48).required(),
+  email: Joi.string().email().required(),
+  phoneNumber: Joi.string(),
+  subject: Joi.string().required(),
+  message: Joi.string().required(),
 });
