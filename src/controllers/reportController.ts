@@ -1,6 +1,7 @@
 import { Booking, Room, RoomType } from '@prisma/client';
 import asyncHandler from 'express-async-handler';
 import prisma from '../lib/prisma';
+import { countDaysBetweenDates } from '../utils/countDaysBetweenDates';
 
 interface RoomWithRoomType extends Room {
   roomType: RoomType;
@@ -58,10 +59,9 @@ const getReportInfo = (bookings: BookingWithRoom[]) => {
   bookings.forEach((booking) => {
     guestCount += booking.adults + booking.children;
 
-    const numberOfNights = Math.ceil(
-      (new Date(booking.departureDate).getTime() -
-        new Date(booking.arrivalDate).getTime()) /
-        (60 * 60 * 24 * 1000),
+    const numberOfNights = countDaysBetweenDates(
+      booking.arrivalDate,
+      booking.departureDate,
     );
 
     totalNights += numberOfNights;
