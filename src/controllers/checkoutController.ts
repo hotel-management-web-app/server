@@ -71,72 +71,11 @@ export const createNewBooking = asyncHandler(async (req, res, next) => {
     return next(createCustomError(404, `Booking not paid!`));
   }
 
-  const {
-    roomTypeId,
-    arrivalDate,
-    departureDate,
-    adults,
-    children,
-    firstName,
-    lastName,
-    email,
-    phoneNumber,
-    notes,
-  } = bookingData;
+  const { arrivalDate, departureDate, adults, children } = bookingData;
 
-  const roomTypes = await prisma.roomType.findMany({
-    include: { rooms: { include: { bookings: true } } },
-  });
+  const guest = await getExistingOrNewGuest();
 
-  const bookedRoomType = roomTypes.find(
-    (roomType) => roomType.id === roomTypeId,
-  );
-
-  const guests = await prisma.guest.findMany();
-
-  let guest;
-
-  const existingGuest = guests.find(
-    (guest) =>
-      guest.firstName === firstName &&
-      guest.lastName === lastName &&
-      guest.email === email,
-  );
-
-  if (existingGuest) guest = existingGuest;
-  else {
-    const newGuest = await prisma.guest.create({
-      data: {
-        firstName,
-        lastName,
-        email,
-        phoneNumber,
-        notes,
-      },
-    });
-
-    guest = newGuest;
-  }
-
-  const room = bookedRoomType?.rooms.find((room) => {
-    return room.bookings.every((booking) => {
-      const incomingArrivalDate = new Date(arrivalDate);
-      const incomingDepartureDate = new Date(departureDate);
-      const bookingArrivalDate = new Date(booking.arrivalDate);
-      const bookingDepartureDate = new Date(booking.departureDate);
-
-      if (
-        (incomingArrivalDate >= bookingArrivalDate &&
-          incomingArrivalDate <= bookingDepartureDate) ||
-        (incomingDepartureDate >= bookingArrivalDate &&
-          incomingDepartureDate <= bookingDepartureDate)
-      ) {
-        return false;
-      }
-
-      return true;
-    });
-  });
+  const room = await findAvailableRoom();
 
   if (!room) {
     return next(createCustomError(404, `No room available!`));
@@ -155,3 +94,62 @@ export const createNewBooking = asyncHandler(async (req, res, next) => {
 
   res.send({ guest, newBooking });
 });
+
+const getExistingOrNewGuest = async () => {
+  const { firstName, lastName, email, phoneNumber, notes } = bookingData;
+
+  const guests = await prisma.guest.findMany();
+  const existingGuest = guests.find(
+    (guest) =>
+      guest.firstName === firstName &&
+      guest.lastName === lastName &&
+      guest.email === email,
+  );
+
+  if (existingGuest) return existingGuest;
+  else {
+    const newGuest = await prisma.guest.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        notes,
+      },
+    });
+
+    return newGuest;
+  }
+};
+
+const findAvailableRoom = async () => {
+  const { roomTypeId, arrivalDate, departureDate } = bookingData;
+
+  const roomTypes = await prisma.roomType.findMany({
+    include: { rooms: { include: { bookings: true } } },
+  });
+
+  const bookedRoomType = roomTypes.find(
+    (roomType) => roomType.id === roomTypeId,
+  );
+
+  return bookedRoomType?.rooms.find((room) => {
+    return room.bookings.every((booking) => {
+      const incomingArrivalDate = new Date(arrivalDate);
+      const incomingDepartureDate = new Date(departureDate);
+      const bookingArrivalDate = new Date(booking.arrivalDate);
+      const bookingDepartureDate = new Date(booking.departureDate);
+
+      if (
+        (incomingArrivalDate >= bookingArrivalDate &&
+          incomingArrivalDate <= bookingDepartureDate) ||
+        (incomingDepartureDate >= bookingArrivalDate &&
+          incomingDepartureDate <= bookingDepartureDate)
+      ) {
+        return false;
+      }
+
+      return true;
+    });
+  });
+};
