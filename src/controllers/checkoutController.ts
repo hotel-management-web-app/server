@@ -92,23 +92,44 @@ export const createNewBooking = asyncHandler(async (req, res, next) => {
     (roomType) => roomType.id === roomTypeId,
   );
 
-  const newGuest = await prisma.guest.create({
-    data: {
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      notes,
-    },
-  });
+  const guests = await prisma.guest.findMany();
+
+  let guest;
+
+  const existingGuest = guests.find(
+    (guest) =>
+      guest.firstName === firstName &&
+      guest.lastName === lastName &&
+      guest.email === email,
+  );
+
+  if (existingGuest) guest = existingGuest;
+  else {
+    const newGuest = await prisma.guest.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        notes,
+      },
+    });
+
+    guest = newGuest;
+  }
 
   const room = bookedRoomType?.rooms.find((room) => {
-    return room.bookings.some((booking) => {
+    return room.bookings.every((booking) => {
+      const incomingArrivalDate = new Date(arrivalDate);
+      const incomingDepartureDate = new Date(departureDate);
+      const bookingArrivalDate = new Date(booking.arrivalDate);
+      const bookingDepartureDate = new Date(booking.departureDate);
+
       if (
-        (new Date(arrivalDate) >= new Date(booking.arrivalDate) &&
-          new Date(arrivalDate) <= new Date(booking.departureDate)) ||
-        (new Date(departureDate) >= new Date(booking.arrivalDate) &&
-          new Date(departureDate) <= new Date(booking.departureDate))
+        (incomingArrivalDate >= bookingArrivalDate &&
+          incomingArrivalDate <= bookingDepartureDate) ||
+        (incomingDepartureDate >= bookingArrivalDate &&
+          incomingDepartureDate <= bookingDepartureDate)
       ) {
         return false;
       }
@@ -128,9 +149,9 @@ export const createNewBooking = asyncHandler(async (req, res, next) => {
       adults,
       children,
       roomId: room.id,
-      guestId: newGuest.id,
+      guestId: guest.id,
     },
   });
 
-  res.send({ newGuest, newBooking });
+  res.send({ guest, newBooking });
 });
