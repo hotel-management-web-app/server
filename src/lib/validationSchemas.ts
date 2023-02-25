@@ -72,3 +72,18 @@ export const contactDataSchema = Joi.object({
   subject: Joi.string().required(),
   message: Joi.string().required(),
 });
+
+export const bookingFormSchema = Joi.object({
+  privacyTerms: Joi.boolean().required(),
+  conditionsAndPolicies: Joi.boolean().required(),
+  firstName: Joi.string().min(3).max(48).required(),
+  lastName: Joi.string().min(3).max(48).required(),
+  email: Joi.string().email().required(),
+  phoneNumber: Joi.string().required(),
+  notes: Joi.string().allow(''),
+  roomTypeId: Joi.number(),
+  arrivalDate: Joi.string(),
+  departureDate: Joi.string(),
+  adults: Joi.number(),
+  children: Joi.number(),
+});
