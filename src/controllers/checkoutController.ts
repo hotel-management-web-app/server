@@ -68,6 +68,10 @@ export const checkout = asyncHandler(async (req, res) => {
 export const createNewBooking = asyncHandler(async (req, res, next) => {
   const intent = await stripe.checkout.sessions.retrieve(req.body.sessionId);
 
+  if (!intent) {
+    return next(createCustomError(404, `Error with checkout!`));
+  }
+
   if (intent.payment_status !== 'paid') {
     return next(createCustomError(404, `Booking not paid!`));
   }
@@ -88,6 +92,7 @@ export const createNewBooking = asyncHandler(async (req, res, next) => {
       departureDate: new Date(departureDate),
       adults,
       children,
+      totalPrice: intent.amount_total || 0,
       roomId: room.id,
       guestId: guest.id,
     },

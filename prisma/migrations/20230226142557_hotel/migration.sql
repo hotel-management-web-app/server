@@ -85,6 +85,7 @@ CREATE TABLE "Booking" (
     "roomId" INTEGER NOT NULL,
     "adults" INTEGER NOT NULL,
     "children" INTEGER NOT NULL,
+    "totalPrice" DOUBLE PRECISION NOT NULL,
     "guestId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

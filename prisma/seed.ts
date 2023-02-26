@@ -20,7 +20,7 @@ async function main() {
         name: faker.company.name(),
         description: faker.lorem.text(),
         occupancy: faker.datatype.number({ min: 1, max: 10 }),
-        price: faker.datatype.number({ min: 1000, max: 2000, precision: 0.1 }),
+        price: faker.datatype.number({ min: 100000, max: 200000 }),
         image: faker.image.city(500, 300),
       },
     });
@@ -50,6 +50,10 @@ async function main() {
         roomId: i + 1,
         adults: 1,
         children: 0,
+        totalPrice: faker.datatype.number({
+          min: 200000,
+          max: 600000,
+        }),
         guestId: i + 1,
       },
     });

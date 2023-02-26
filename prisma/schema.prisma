@@ -97,6 +97,7 @@ model Booking {
   roomId        Int
   adults        Int
   children      Int
+  totalPrice    Float
   guest         Guest         @relation(fields: [guestId], references: [id])
   guestId       Int
   createdAt     DateTime      @default(now())

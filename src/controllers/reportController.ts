@@ -16,7 +16,6 @@ export const getReport = asyncHandler(async (req, res) => {
   const bookings = await prisma.booking.findMany({
     where: {
       arrivalDate: { gte: startDate, lte: endDate },
-      departureDate: { gte: startDate, lte: endDate },
     },
     include: {
       room: { include: { roomType: true } },
@@ -85,16 +84,17 @@ const getAverageInfo = (bookings: BookingWithRoom[]) => {
   });
 
   const averageAdultsGuests =
-    Number((adultsCount / allGuestCount).toFixed(2)) * 100;
+    Number((adultsCount / allGuestCount).toFixed(2)) * 100 || 0;
   const averageChildrenGuests =
-    Number((childrenCount / allGuestCount).toFixed(2)) * 100;
+    Number((childrenCount / allGuestCount).toFixed(2)) * 100 || 0;
 
   const bookingsInfo = getReportInfo(bookings);
   const { totalNights, guestCount } = bookingsInfo;
   const bookingsCount = bookings.length;
 
-  const nightsPerBooking = (totalNights / bookingsCount).toFixed(2);
-  const guestsPerBooking = (guestCount / bookingsCount).toFixed(2);
+  const nightsPerBooking =
+    Number((totalNights / bookingsCount).toFixed(2)) || 0;
+  const guestsPerBooking = Number((guestCount / bookingsCount).toFixed(2)) || 0;
 
   const averageInfo = {
     adultsGuests: `${adultsCount} (${averageAdultsGuests}%)`,
@@ -163,10 +163,9 @@ const getBookingsInfo = (bookings: Booking[], roomTypePrice: number) => {
   bookings.forEach((booking) => {
     guestsCount += booking.adults + booking.children;
 
-    nightsCount += Math.ceil(
-      (new Date(booking.departureDate).getTime() -
-        new Date(booking.arrivalDate).getTime()) /
-        (60 * 60 * 24 * 1000),
+    nightsCount += countDaysBetweenDates(
+      booking.arrivalDate,
+      booking.departureDate,
     );
   });
 
