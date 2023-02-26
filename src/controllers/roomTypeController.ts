@@ -12,7 +12,7 @@ export const getRoomTypes = asyncHandler(async (req, res) => {
       id: 'asc',
     },
     include: {
-      rooms: true,
+      rooms: { include: { bookings: true } },
     },
   });
   res.send(roomTypes);
