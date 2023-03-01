@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import prisma from '../lib/prisma';
 import { bookingSchema, guestSchema } from '../lib/validationSchemas';
+import { countDaysBetweenDates } from '../utils/countDaysBetweenDates';
 import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
@@ -51,7 +52,21 @@ export const createBooking = asyncHandler(async (req, res) => {
 
   validator.showErrors(res);
 
-  const booking = await prisma.booking.create({ data: req.body });
+  const { roomId, arrivalDate, departureDate } = req.body;
+
+  const room = await prisma.room.findUniqueOrThrow({
+    where: { id: roomId },
+    include: { roomType: true },
+  });
+
+  const { price } = room.roomType;
+
+  const nightsCount = countDaysBetweenDates(arrivalDate, departureDate);
+  const totalPrice: number = nightsCount * price;
+
+  const booking = await prisma.booking.create({
+    data: { ...req.body, totalPrice },
+  });
   res.send(booking);
 });
 
