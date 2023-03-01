@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler';
+import { months } from '../constants';
 import prisma from '../lib/prisma';
 
 export const getDashboard = asyncHandler(async (req, res) => {
@@ -9,6 +10,7 @@ export const getDashboard = asyncHandler(async (req, res) => {
   const arrivalsAndDeparturesToday = await getArrivalsAndDeparturesToday();
   const availableRoomsByRoomTypeCount =
     await getAvailableRoomsByRoomTypeCount();
+  const revenueData = await getRevenueData();
 
   const dashboardData = {
     personCount,
@@ -17,6 +19,7 @@ export const getDashboard = asyncHandler(async (req, res) => {
     allHousekeepingStatusCount,
     arrivalsAndDeparturesToday,
     availableRoomsByRoomTypeCount,
+    revenueData,
   };
 
   res.send(dashboardData);
@@ -171,4 +174,32 @@ const getAvailableRoomsByRoomTypeCount = async () => {
   });
 
   return rooms;
+};
+
+const getRevenueData = async () => {
+  const bookings = await prisma.booking.findMany();
+
+  const dateNow = new Date();
+  const currentYear = dateNow.getFullYear();
+
+  const revenueData = months.map((month, index) => {
+    let totalAmount = 0;
+
+    bookings.forEach((booking) => {
+      const { arrivalDate, totalPrice } = booking;
+      if (
+        arrivalDate.getFullYear() === currentYear &&
+        arrivalDate.getMonth() === index
+      ) {
+        totalAmount += totalPrice;
+      }
+    });
+
+    return {
+      month,
+      totalAmount: totalAmount / 100,
+    };
+  });
+
+  return revenueData;
 };

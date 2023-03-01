@@ -16,7 +16,6 @@ export const getReport = asyncHandler(async (req, res) => {
   const bookings = await prisma.booking.findMany({
     where: {
       arrivalDate: { gte: startDate, lte: endDate },
-      departureDate: { gte: startDate, lte: endDate },
     },
     include: {
       room: { include: { roomType: true } },
@@ -37,7 +36,10 @@ export const getReport = asyncHandler(async (req, res) => {
 
   const averageInfo = getAverageInfo(bookings);
 
-  const roomTypesInfo = await getRoomTypesInfo();
+  const roomTypesInfo = await getRoomTypesInfo(
+    new Date(startDate),
+    new Date(endDate),
+  );
 
   const report = {
     allBookingsInfo,
@@ -66,7 +68,7 @@ const getReportInfo = (bookings: BookingWithRoom[]) => {
 
     totalNights += numberOfNights;
 
-    totalPrice += booking.room.roomType.price * numberOfNights;
+    totalPrice += booking.totalPrice;
   });
 
   return { bookingsCount, guestCount, totalNights, totalPrice };
@@ -85,16 +87,17 @@ const getAverageInfo = (bookings: BookingWithRoom[]) => {
   });
 
   const averageAdultsGuests =
-    Number((adultsCount / allGuestCount).toFixed(2)) * 100;
+    Number((adultsCount / allGuestCount).toFixed(2)) * 100 || 0;
   const averageChildrenGuests =
-    Number((childrenCount / allGuestCount).toFixed(2)) * 100;
+    Number((childrenCount / allGuestCount).toFixed(2)) * 100 || 0;
 
   const bookingsInfo = getReportInfo(bookings);
   const { totalNights, guestCount } = bookingsInfo;
   const bookingsCount = bookings.length;
 
-  const nightsPerBooking = (totalNights / bookingsCount).toFixed(2);
-  const guestsPerBooking = (guestCount / bookingsCount).toFixed(2);
+  const nightsPerBooking =
+    Number((totalNights / bookingsCount).toFixed(2)) || 0;
+  const guestsPerBooking = Number((guestCount / bookingsCount).toFixed(2)) || 0;
 
   const averageInfo = {
     adultsGuests: `${adultsCount} (${averageAdultsGuests}%)`,
@@ -106,7 +109,7 @@ const getAverageInfo = (bookings: BookingWithRoom[]) => {
   return averageInfo;
 };
 
-const getRoomTypesInfo = async () => {
+const getRoomTypesInfo = async (startDate: Date, endDate: Date) => {
   const roomTypes = await prisma.roomType.findMany({
     include: {
       rooms: {
@@ -125,15 +128,22 @@ const getRoomTypesInfo = async () => {
       allBookings.push(...room.bookings);
     });
 
-    const confirmedBookings = allBookings.filter(
+    const filteredBookings = allBookings.filter((booking) => {
+      if (booking.arrivalDate >= startDate && booking.arrivalDate <= endDate)
+        return true;
+
+      return false;
+    });
+
+    const confirmedBookings = filteredBookings.filter(
       (booking) => booking.status === 'CONFIRMED',
     );
 
-    const cancelledBookings = allBookings.filter(
+    const cancelledBookings = filteredBookings.filter(
       (booking) => booking.status === 'CANCELLED',
     );
 
-    const allBookingsInfo = getBookingsInfo(allBookings, roomType.price);
+    const allBookingsInfo = getBookingsInfo(filteredBookings, roomType.price);
     const confirmedBookingsInfo = getBookingsInfo(
       confirmedBookings,
       roomType.price,
@@ -163,10 +173,9 @@ const getBookingsInfo = (bookings: Booking[], roomTypePrice: number) => {
   bookings.forEach((booking) => {
     guestsCount += booking.adults + booking.children;
 
-    nightsCount += Math.ceil(
-      (new Date(booking.departureDate).getTime() -
-        new Date(booking.arrivalDate).getTime()) /
-        (60 * 60 * 24 * 1000),
+    nightsCount += countDaysBetweenDates(
+      booking.arrivalDate,
+      booking.departureDate,
     );
   });
 
