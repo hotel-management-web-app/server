@@ -50,6 +50,8 @@
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/csurf": "^1.11.2",
     "chai": "^4.3.7",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
@@ -74,8 +76,6 @@
     ]
   },
   "dependencies": {
-    "@types/cookie-parser": "^1.4.3",
-    "@types/csurf": "^1.11.2",
     "argon2": "^0.30.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
