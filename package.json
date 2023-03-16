@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf ./build && tsc",
     "start:dev": "nodemon",
-    "start": "npm run build && node build/app.js",
+    "start": "node build/app.js",
     "test": "set TS_NODE_COMPILER_OPTIONS={\"module\": \"commonjs\" } && mocha -r ts-node/register 'src/test/*.test.ts'",
     "lint": "eslint . --ext .ts",
     "prettier-format": "run-script-os",
