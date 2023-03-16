@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import argon2 from 'argon2';
-import prisma from '../src/lib/prisma';
+import prisma from './lib/prisma';
 
 async function main() {
   const hashedPassword = await argon2.hash('password');
