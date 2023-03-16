@@ -57,7 +57,7 @@ export const loginUser = asyncHandler(async (req, res) => {
       .cookie('token', token, {
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-        domain: `.${process.env.CLIENT_URL}`,
+        secure: false,
       })
       .json({
         id: user.id,
