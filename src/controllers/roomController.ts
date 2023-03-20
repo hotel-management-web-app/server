@@ -5,6 +5,10 @@ import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
 export const getRooms = asyncHandler(async (req, res) => {
+  const limit = Number(req.query.limit);
+  const pageNumber = Number(req.query.page);
+  const offset = (pageNumber - 1) * limit;
+
   const rooms = await prisma.room.findMany({
     orderBy: {
       id: 'asc',
@@ -14,6 +18,8 @@ export const getRooms = asyncHandler(async (req, res) => {
         select: { name: true },
       },
     },
+    ...(offset && { skip: offset }),
+    ...(limit && { take: limit }),
   });
   res.send(rooms);
 });

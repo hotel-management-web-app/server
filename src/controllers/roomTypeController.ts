@@ -7,6 +7,10 @@ import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
 export const getRoomTypes = asyncHandler(async (req, res) => {
+  const limit = Number(req.query.limit);
+  const pageNumber = Number(req.query.page);
+  const offset = (pageNumber - 1) * limit;
+
   const roomTypes = await prisma.roomType.findMany({
     orderBy: {
       id: 'asc',
@@ -14,6 +18,8 @@ export const getRoomTypes = asyncHandler(async (req, res) => {
     include: {
       rooms: { include: { bookings: true } },
     },
+    ...(offset && { skip: offset }),
+    ...(limit && { take: limit }),
   });
   res.send(roomTypes);
 });

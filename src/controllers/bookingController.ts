@@ -6,6 +6,10 @@ import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
 export const getBookings = asyncHandler(async (req, res) => {
+  const limit = Number(req.query.limit);
+  const pageNumber = Number(req.query.page);
+  const offset = (pageNumber - 1) * limit;
+
   const bookings = await prisma.booking.findMany({
     orderBy: {
       id: 'asc',
@@ -23,8 +27,15 @@ export const getBookings = asyncHandler(async (req, res) => {
         },
       },
     },
+    ...(offset && { skip: offset }),
+    ...(limit && { take: limit }),
   });
-  res.send(bookings);
+
+  const bookingsCount = await prisma.booking.count();
+
+  const pageCount = Math.ceil(bookingsCount / limit);
+
+  res.send({ bookings, pageCount });
 });
 
 export const getBooking = asyncHandler(async (req, res, next) => {
