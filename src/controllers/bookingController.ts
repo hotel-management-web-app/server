@@ -32,7 +32,6 @@ export const getBookings = asyncHandler(async (req, res) => {
   });
 
   const bookingsCount = await prisma.booking.count();
-
   const pageCount = Math.ceil(bookingsCount / limit);
 
   res.send({ bookings, pageCount });

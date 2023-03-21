@@ -21,7 +21,11 @@ export const getRoomTypes = asyncHandler(async (req, res) => {
     ...(offset && { skip: offset }),
     ...(limit && { take: limit }),
   });
-  res.send(roomTypes);
+
+  const roomTypesCount = await prisma.roomType.count();
+  const pageCount = Math.ceil(roomTypesCount / limit);
+
+  res.send({ roomTypes, pageCount });
 });
 
 export const getRoomType = asyncHandler(async (req, res, next) => {

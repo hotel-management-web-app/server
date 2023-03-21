@@ -23,7 +23,11 @@ export const getGuests = asyncHandler(async (req, res) => {
     ...(offset && { skip: offset }),
     ...(limit && { take: limit }),
   });
-  res.send(guests);
+
+  const guestsCount = await prisma.guest.count();
+  const pageCount = Math.ceil(guestsCount / limit);
+
+  res.send({ guests, pageCount });
 });
 
 export const getGuest = asyncHandler(async (req, res, next) => {
