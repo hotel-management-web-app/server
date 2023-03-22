@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler';
+import { Prisma } from '@prisma/client';
 import prisma from '../lib/prisma';
 import { bookingSchema, guestSchema } from '../lib/validationSchemas';
 import { countDaysBetweenDates } from '../utils/countDaysBetweenDates';
@@ -6,14 +7,32 @@ import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
 export const getBookings = asyncHandler(async (req, res) => {
-  const limit = Number(req.query.limit);
-  const pageNumber = Number(req.query.page);
-  const offset = (pageNumber - 1) * limit;
+  const { page, limit, search } = req.query;
+
+  const currentLimit = Number(limit);
+  const pageNumber = Number(page);
+  const offset = (pageNumber - 1) * currentLimit;
+
+  const currentSearch = search ? String(search) : '';
+
+  const filter: Prisma.BookingWhereInput = {
+    guest: {
+      OR: [
+        {
+          firstName: { contains: currentSearch, mode: 'insensitive' },
+        },
+        {
+          lastName: { contains: currentSearch, mode: 'insensitive' },
+        },
+      ],
+    },
+  };
 
   const bookings = await prisma.booking.findMany({
     orderBy: {
       id: 'asc',
     },
+    where: filter,
     include: {
       room: {
         select: {
@@ -28,11 +47,13 @@ export const getBookings = asyncHandler(async (req, res) => {
       },
     },
     ...(offset && { skip: offset }),
-    ...(limit && { take: limit }),
+    ...(currentLimit && { take: currentLimit }),
   });
 
-  const bookingsCount = await prisma.booking.count();
-  const pageCount = Math.ceil(bookingsCount / limit);
+  const bookingsCount = await prisma.booking.count({
+    where: filter,
+  });
+  const pageCount = Math.ceil(bookingsCount / currentLimit);
 
   res.send({ bookings, pageCount });
 });
