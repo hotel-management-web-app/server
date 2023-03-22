@@ -1,18 +1,38 @@
 import asyncHandler from 'express-async-handler';
+import { Prisma } from '@prisma/client';
 import prisma from '../lib/prisma';
 import { guestSchema } from '../lib/validationSchemas';
 import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
 export const getGuests = asyncHandler(async (req, res) => {
-  const limit = Number(req.query.limit);
-  const pageNumber = Number(req.query.page);
-  const offset = (pageNumber - 1) * limit;
+  const { page, limit, search } = req.query;
+
+  const currentLimit = Number(limit);
+  const pageNumber = Number(page);
+  const offset = (pageNumber - 1) * currentLimit;
+
+  const currentSearch = search ? String(search) : '';
+
+  const filter: Prisma.GuestWhereInput = {
+    OR: [
+      {
+        firstName: { contains: currentSearch, mode: 'insensitive' },
+      },
+      {
+        lastName: { contains: currentSearch, mode: 'insensitive' },
+      },
+      {
+        email: { contains: currentSearch, mode: 'insensitive' },
+      },
+    ],
+  };
 
   const guests = await prisma.guest.findMany({
     orderBy: {
       id: 'asc',
     },
+    where: filter,
     include: {
       _count: {
         select: {
@@ -21,11 +41,11 @@ export const getGuests = asyncHandler(async (req, res) => {
       },
     },
     ...(offset && { skip: offset }),
-    ...(limit && { take: limit }),
+    ...(currentLimit && { take: currentLimit }),
   });
 
-  const guestsCount = await prisma.guest.count();
-  const pageCount = Math.ceil(guestsCount / limit);
+  const guestsCount = await prisma.guest.count({ where: filter });
+  const pageCount = Math.ceil(guestsCount / currentLimit);
 
   res.send({ guests, pageCount });
 });
