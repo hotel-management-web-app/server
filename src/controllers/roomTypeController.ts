@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler';
+import { Prisma } from '@prisma/client';
 import prisma from '../lib/prisma';
 import { roomTypeSchema } from '../lib/validationSchemas';
 import { createImageUrl } from '../utils/createImageUrl';
@@ -7,23 +8,32 @@ import { createCustomError } from '../utils/error';
 import Validator from '../utils/validator';
 
 export const getRoomTypes = asyncHandler(async (req, res) => {
-  const limit = Number(req.query.limit);
-  const pageNumber = Number(req.query.page);
-  const offset = (pageNumber - 1) * limit;
+  const { page, limit, search } = req.query;
+
+  const currentLimit = Number(limit);
+  const pageNumber = Number(page);
+  const offset = (pageNumber - 1) * currentLimit;
+
+  const currentSearch = search ? String(search) : '';
+
+  const filter: Prisma.RoomTypeWhereInput = {
+    name: { contains: currentSearch, mode: 'insensitive' },
+  };
 
   const roomTypes = await prisma.roomType.findMany({
     orderBy: {
       id: 'asc',
     },
+    where: filter,
     include: {
       rooms: { include: { bookings: true } },
     },
     ...(offset && { skip: offset }),
-    ...(limit && { take: limit }),
+    ...(currentLimit && { take: currentLimit }),
   });
 
-  const roomTypesCount = await prisma.roomType.count();
-  const pageCount = Math.ceil(roomTypesCount / limit);
+  const roomTypesCount = await prisma.roomType.count({ where: filter });
+  const pageCount = Math.ceil(roomTypesCount / currentLimit);
 
   res.send({ roomTypes, pageCount });
 });
