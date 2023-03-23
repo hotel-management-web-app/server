@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import argon2 from 'argon2';
 import prisma from './lib/prisma';
+import { roomTypesData } from './mockData/roomTypesData';
 
 async function main() {
   const hashedPassword = await argon2.hash('password');
@@ -17,11 +18,14 @@ async function main() {
   for (let i = 0; i < 5; i++) {
     await prisma.roomType.create({
       data: {
-        name: faker.company.name(),
-        description: faker.lorem.text(),
-        occupancy: faker.datatype.number({ min: 1, max: 10 }),
-        price: faker.datatype.number({ min: 100000, max: 200000 }),
-        image: faker.image.city(500, 300),
+        name: roomTypesData[i].name,
+        description: roomTypesData[i].description,
+        occupancy: roomTypesData[i].occupancy,
+        price: roomTypesData[i].price,
+        image: roomTypesData[i].image,
+        images: roomTypesData[i].images,
+        amenities: roomTypesData[i].amenities,
+        details: roomTypesData[i].details,
       },
     });
 
