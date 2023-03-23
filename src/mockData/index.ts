@@ -1,5 +1,3 @@
-import { Prisma, RoomType } from '@prisma/client';
-
 export const roomTypesData = [
   {
     name: 'Single Room',
@@ -138,3 +136,32 @@ export const roomTypesData = [
     price: 500000,
   },
 ];
+
+export const aboutData = {
+  title: 'Welcome to our hotels',
+  description:
+    'Since 2016, we’ve grown from our roots as an award-winning hotel in Gstaad, Switzerland, to include a wider collection of chalets and waterfront retreats that stretch from the Alps to the Mediterranean. And, while we evolve to the changing needs of our guests, we’ve kept true to our signature Ultima experience. You will come to expect exceptionally high service from our in-house teams, as well as the utmost comfort and discretion.Wellbeing and sustainability are also at the core of our DNA. Each property has access to its own extensive, state-of-the-art wellness amenities and has been artistically curated to reflect its natural surroundings.',
+  details: [
+    {
+      image:
+        'https://www.ultimacollection.com/application/files/7116/2189/6649/1_-_Mission.jpeg',
+      title: 'Mission',
+      description:
+        'We are on a mission to continuously elevate the traditional hospitality sector and set the trend in tailored, luxury living. It’s the service of a 5-star superior hotel, served to you in utter privacy.',
+    },
+    {
+      image:
+        'https://www.ultimacollection.com/application/files/5916/2240/5250/2_-_New_-_Vision.jpg',
+      title: 'Vision',
+      description:
+        'Our vision is to create properties rich in character in the world’s most exclusive and desirable destinations. Plus, our commitment to sustainability starts at the beginning. We use local resources to thoughtfully create each of our properties, such as woods in high supply from nearby forests, produce from locally owned businesses and solar panels for renewable energy.',
+    },
+    {
+      image:
+        'https://www.ultimacollection.com/application/files/9216/5175/5789/Feel_the_Heat_Ultima_Gstaads_Award-Winning_Kitchen.jpg',
+      title: 'Values',
+      description:
+        'Authenticity, sustainability, and a personalised service lie at the core of our identity. Each of our staff is handpicked because of their unwavering standards, whether it’s a trailblazing chef from a renowned restaurant or a wellness coach that’s perfectly suited to you.',
+    },
+  ],
+};

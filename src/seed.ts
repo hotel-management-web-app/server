@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import argon2 from 'argon2';
 import prisma from './lib/prisma';
-import { roomTypesData } from './mockData/roomTypesData';
+import { aboutData, roomTypesData } from './mockData';
 
 async function main() {
   const hashedPassword = await argon2.hash('password');
@@ -61,26 +61,28 @@ async function main() {
         guestId: i + 1,
       },
     });
-
-    await prisma.aboutDetail.create({
-      data: {
-        image: faker.image.city(300, 300),
-        title: faker.word.noun(),
-        description: faker.lorem.sentences(3),
-      },
-    });
   }
 
   await prisma.aboutInfo.create({
     data: {
-      title: 'Hotel',
-      description: 'Welcome to our hotel',
+      title: aboutData.title,
+      description: aboutData.description,
     },
+  });
+
+  aboutData.details.forEach(async (detail) => {
+    await prisma.aboutDetail.create({
+      data: {
+        image: detail.image,
+        title: detail.title,
+        description: detail.description,
+      },
+    });
   });
 
   await prisma.generalSettings.create({
     data: {
-      logo: faker.image.business(300, 300),
+      logo: 'https://marketplace.canva.com/EAE0d_FW6ZA/1/0/1600w/canva-retro-vector-gold-frames-luxury-decorative-logo-template-uDFt-cAE2ug.jpg',
       hotelName: 'Hotel',
       country: 'Poland',
       email: 'hotel@example.com',
