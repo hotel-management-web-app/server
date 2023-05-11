@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  server:
+    container_name: hotel_server
+    build: .
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '5000:5000'
+    depends_on:
+      - db
+      - adminer
+  
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: hotel
+    ports:
+      - "5432:5432"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
