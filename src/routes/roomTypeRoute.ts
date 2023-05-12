@@ -90,6 +90,12 @@ router
  *      in: path
  *      description: The id of the room type
  *      required: true
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/RoomTypeInput'
  *    responses:
  *      200:
  *        description: Success

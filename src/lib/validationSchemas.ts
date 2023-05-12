@@ -33,6 +33,28 @@ export const roomTypeSchema = Joi.object({
   images: Joi.array().items(Joi.string()),
 });
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    RoomInput:
+ *      type: object
+ *      required:
+ *        - roomTypeId
+ *        - floorNumber
+ *        - roomNumber
+ *      properties:
+ *        roomTypeId:
+ *          type: number
+ *          default: 1
+ *        floorNumber:
+ *          type: number
+ *          default: 3
+ *        roomNumber:
+ *          type: number
+ *          default: 4
+ */
+
 export const roomSchema = Joi.object({
   roomStatus: Joi.string(),
   roomTypeId: Joi.number().required(),
