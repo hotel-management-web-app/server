@@ -17,6 +17,7 @@ import tokenRoute from './routes/tokenRoute';
 import reportRoute from './routes/reportRoute';
 import contactRoute from './routes/contactRoute';
 import checkoutRoute from './routes/checkoutRoute';
+import swaggerDocs from './lib/swagger';
 import { port } from './constants';
 
 const app = express();
@@ -47,6 +48,9 @@ app.use(prefix + '/', tokenRoute);
 
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
+  swaggerDocs(app, port);
+});
 
 export default app;
