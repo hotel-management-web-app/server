@@ -1,5 +1,27 @@
 import Joi from 'joi';
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    RoomTypeInput:
+ *      type: object
+ *      required:
+ *        - name
+ *        - occupancy
+ *        - price
+ *      properties:
+ *        name:
+ *          type: string
+ *          default: Test Room
+ *        occupancy:
+ *          type: string
+ *          default: 3
+ *        price:
+ *          type: string
+ *          default: 300000
+ */
+
 export const roomTypeSchema = Joi.object({
   name: Joi.string().min(3).max(48).required(),
   description: Joi.string().allow(''),
