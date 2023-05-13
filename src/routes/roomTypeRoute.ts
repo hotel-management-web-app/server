@@ -16,10 +16,113 @@ const upload = multer({
 });
 const fields = [{ name: 'image', maxCount: 1 }, { name: 'images' }];
 
+/**
+ * @openapi
+ * '/api/room-types':
+ *  get:
+ *    tags:
+ *    - Room type
+ *    summary: Get all room types
+ *    description: Get all room types
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Bad Request
+ */
+
+/**
+ * @openapi
+ * '/api/room-types':
+ *  post:
+ *    tags:
+ *    - Room type
+ *    summary: Add room type
+ *    description: Add room type
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        multipart/form-data:
+ *          schema:
+ *            $ref: '#/components/schemas/RoomType'
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Cannot create room type
+ */
+
 router
   .route('/')
   .get(getRoomTypes)
   .post([protect, upload.fields(fields)], createRoomType);
+
+/**
+ * @openapi
+ * '/api/room-types/{id}':
+ *  get:
+ *    tags:
+ *    - Room type
+ *    summary: Get room type by id
+ *    description: Get room type by id
+ *    parameters:
+ *    - name: id
+ *      in: path
+ *      description: The id of the room type
+ *      required: true
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Room type not found
+ */
+
+/**
+ * @openapi
+ * '/api/room-types/{id}':
+ *  put:
+ *    tags:
+ *    - Room type
+ *    summary: Edit room type
+ *    description: Edit room type
+ *    parameters:
+ *    - name: id
+ *      in: path
+ *      description: The id of the room type
+ *      required: true
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        multipart/form-data:
+ *          schema:
+ *            $ref: '#/components/schemas/RoomType'
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Cannot edit room type
+ */
+
+/**
+ * @openapi
+ * '/api/room-types/{id}':
+ *  delete:
+ *    tags:
+ *    - Room type
+ *    summary: Delete room type
+ *    description: Delete room type
+ *    parameters:
+ *    - name: id
+ *      in: path
+ *      description: The id of the room type
+ *      required: true
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Cannot delete room type
+ */
+
 router
   .route('/:id')
   .get(getRoomType)

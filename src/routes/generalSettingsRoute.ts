@@ -12,6 +12,42 @@ const upload = multer({
   storage: multerStorage,
 });
 
+/**
+ * @openapi
+ * '/api/general-settings':
+ *  get:
+ *    tags:
+ *    - General settings
+ *    summary: Get all general settings
+ *    description: Get all general settings
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Bad Request
+ */
+
+/**
+ * @openapi
+ * '/api/general-settings':
+ *  put:
+ *    tags:
+ *    - General settings
+ *    summary: Edit general settings
+ *    description: Edit general settings
+ *    requestBody:
+ *     required: true
+ *     content:
+ *       application/json:
+ *         schema:
+ *            $ref: '#/components/schemas/GeneralSettings'
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Cannot edit general settings
+ */
+
 router
   .route('/')
   .get(getGeneralSettings)
