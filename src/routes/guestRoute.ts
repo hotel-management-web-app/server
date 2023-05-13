@@ -15,7 +15,7 @@ const router = express.Router();
  * '/api/guests':
  *  get:
  *    tags:
- *    - Guests
+ *    - Guest
  *    summary: Get all guests
  *    description: Get all guests
  *    responses:
@@ -30,7 +30,7 @@ const router = express.Router();
  * '/api/guests':
  *  post:
  *    tags:
- *    - Guests
+ *    - Guest
  *    summary: Add guest
  *    description: Add guest
  *    requestBody:
@@ -53,7 +53,7 @@ router.route('/').get(getGuests).post(protect, createGuest);
  * '/api/guests/{id}':
  *  get:
  *    tags:
- *    - Guests
+ *    - Guest
  *    summary: Get guest by id
  *    description: Get guest by id
  *    parameters:
@@ -73,7 +73,7 @@ router.route('/').get(getGuests).post(protect, createGuest);
  * '/api/guests/{id}':
  *  put:
  *    tags:
- *    - Guests
+ *    - Guest
  *    summary: Edit room
  *    description: Edit guest
  *    parameters:
@@ -99,7 +99,7 @@ router.route('/').get(getGuests).post(protect, createGuest);
  * '/api/guests/{id}':
  *  delete:
  *    tags:
- *    - Guests
+ *    - Guest
  *    summary: Delete guest
  *    description: Delete guest
  *    parameters:

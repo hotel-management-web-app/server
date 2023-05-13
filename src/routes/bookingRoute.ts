@@ -16,7 +16,7 @@ const router = express.Router();
  * '/api/bookings':
  *  get:
  *    tags:
- *    - Bookings
+ *    - Booking
  *    summary: Get all bookings
  *    description: Get all bookings
  *    responses:
@@ -31,7 +31,7 @@ const router = express.Router();
  * '/api/bookings':
  *  post:
  *    tags:
- *    - Bookings
+ *    - Booking
  *    summary: Add booking
  *    description: Add booking
  *    requestBody:
@@ -54,7 +54,7 @@ router.route('/').get(getBookings).post(protect, createBooking);
  * '/api/bookings/{id}':
  *  get:
  *    tags:
- *    - Bookings
+ *    - Booking
  *    summary: Get booking by id
  *    description: Get booking by id
  *    parameters:
@@ -74,7 +74,7 @@ router.route('/').get(getBookings).post(protect, createBooking);
  * '/api/bookings/{id}':
  *  put:
  *    tags:
- *    - Bookings
+ *    - Booking
  *    summary: Edit booking
  *    description: Edit booking
  *    parameters:
@@ -100,7 +100,7 @@ router.route('/').get(getBookings).post(protect, createBooking);
  * '/api/bookings/{id}':
  *  delete:
  *    tags:
- *    - Bookings
+ *    - Booking
  *    summary: Delete booking
  *    description: Delete booking
  *    parameters:

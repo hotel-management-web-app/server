@@ -16,7 +16,7 @@ const router = express.Router();
  * '/api/rooms':
  *  get:
  *    tags:
- *    - Rooms
+ *    - Room
  *    summary: Get all rooms
  *    description: Get all rooms
  *    responses:
@@ -31,7 +31,7 @@ const router = express.Router();
  * '/api/rooms':
  *  post:
  *    tags:
- *    - Rooms
+ *    - Room
  *    summary: Add room
  *    description: Add room
  *    requestBody:
@@ -54,7 +54,7 @@ router.route('/').get(getRooms).post(protect, createRoom);
  * '/api/rooms/{id}':
  *  get:
  *    tags:
- *    - Rooms
+ *    - Room
  *    summary: Get room by id
  *    description: Get room by id
  *    parameters:
@@ -74,7 +74,7 @@ router.route('/').get(getRooms).post(protect, createRoom);
  * '/api/rooms/{id}':
  *  put:
  *    tags:
- *    - Rooms
+ *    - Room
  *    summary: Edit room
  *    description: Edit room
  *    parameters:
@@ -100,7 +100,7 @@ router.route('/').get(getRooms).post(protect, createRoom);
  * '/api/rooms/{id}':
  *  delete:
  *    tags:
- *    - Rooms
+ *    - Room
  *    summary: Delete room
  *    description: Delete room
  *    parameters:

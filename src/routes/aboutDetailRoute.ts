@@ -20,7 +20,7 @@ const upload = multer({
  * '/api/about-details':
  *  get:
  *    tags:
- *    - About details
+ *    - About detail
  *    summary: Get about details
  *    description: Get about details
  *    responses:
@@ -35,7 +35,7 @@ const upload = multer({
  * '/api/about-details':
  *  post:
  *    tags:
- *    - About details
+ *    - About detail
  *    summary: Add about detail
  *    description: Add about detail
  *    requestBody:
@@ -61,7 +61,7 @@ router
  * '/api/about-details/{id}':
  *  get:
  *    tags:
- *    - About details
+ *    - About detail
  *    summary: Get about detail by id
  *    description: Get about detail by id
  *    parameters:
@@ -81,7 +81,7 @@ router
  * '/api/about-details/{id}':
  *  put:
  *    tags:
- *    - About details
+ *    - About detail
  *    summary: Edit about detail
  *    description: Edit about detail
  *    parameters:
@@ -107,7 +107,7 @@ router
  * '/api/about-details/{id}':
  *  delete:
  *    tags:
- *    - About details
+ *    - About detail
  *    summary: Delete about detail
  *    description: Delete about detail
  *    parameters:

@@ -14,7 +14,7 @@ const router = express.Router();
  * '/api/auth/register':
  *  post:
  *    tags:
- *    - Users
+ *    - User
  *    summary: Register user
  *    description: Register user
  *    requestBody:
@@ -51,7 +51,7 @@ router.post('/register', registerUser);
  * '/api/auth/login':
  *  post:
  *    tags:
- *    - Users
+ *    - User
  *    summary: Authenticate a user
  *    description: Authenticate a user
  *    requestBody:
@@ -84,7 +84,7 @@ router.post('/login', loginUser);
  * '/api/auth/logout':
  *  post:
  *    tags:
- *    - Users
+ *    - User
  *    summary: Logout
  *    description: Logout user
  *    responses:
@@ -101,7 +101,7 @@ router.post('/logout', protect, logout);
  * '/api/auth/me':
  *  get:
  *    tags:
- *    - Users
+ *    - User
  *    summary: Get user data
  *    description: Get user data
  *    responses:

@@ -21,7 +21,7 @@ const fields = [{ name: 'image', maxCount: 1 }, { name: 'images' }];
  * '/api/room-types':
  *  get:
  *    tags:
- *    - Room types
+ *    - Room type
  *    summary: Get all room types
  *    description: Get all room types
  *    responses:
@@ -36,7 +36,7 @@ const fields = [{ name: 'image', maxCount: 1 }, { name: 'images' }];
  * '/api/room-types':
  *  post:
  *    tags:
- *    - Room types
+ *    - Room type
  *    summary: Add room type
  *    description: Add room type
  *    requestBody:
@@ -62,7 +62,7 @@ router
  * '/api/room-types/{id}':
  *  get:
  *    tags:
- *    - Room types
+ *    - Room type
  *    summary: Get room type by id
  *    description: Get room type by id
  *    parameters:
@@ -82,7 +82,7 @@ router
  * '/api/room-types/{id}':
  *  put:
  *    tags:
- *    - Room types
+ *    - Room type
  *    summary: Edit room type
  *    description: Edit room type
  *    parameters:
@@ -108,7 +108,7 @@ router
  * '/api/room-types/{id}':
  *  delete:
  *    tags:
- *    - Room types
+ *    - Room type
  *    summary: Delete room type
  *    description: Delete room type
  *    parameters:
