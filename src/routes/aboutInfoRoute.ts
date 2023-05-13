@@ -40,7 +40,7 @@ const router = express.Router();
  *      200:
  *        description: Success
  *      404:
- *        description: Cannot edit room
+ *        description: Cannot edit about info
  */
 
 router.route('/').get(getAboutInfo).put(protect, updateAboutInfo);

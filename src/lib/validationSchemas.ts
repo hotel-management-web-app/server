@@ -184,6 +184,23 @@ export const aboutInfoSchema = Joi.object({
   description: Joi.string().allow(''),
 });
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    AboutDetailInput:
+ *      type: object
+ *      required:
+ *        - title
+ *      properties:
+ *        title:
+ *          type: string
+ *          default: Title
+ *        description:
+ *          type: string
+ *          default: ''
+ */
+
 export const aboutDetailSchema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().allow(''),
