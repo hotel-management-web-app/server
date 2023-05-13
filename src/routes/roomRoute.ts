@@ -39,7 +39,7 @@ const router = express.Router();
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/RoomInput'
+ *            $ref: '#/components/schemas/Room'
  *    responses:
  *      200:
  *        description: Success
@@ -87,7 +87,7 @@ router.route('/').get(getRooms).post(protect, createRoom);
  *     content:
  *       application/json:
  *         schema:
- *            $ref: '#/components/schemas/RoomInput'
+ *            $ref: '#/components/schemas/Room'
  *    responses:
  *      200:
  *        description: Success

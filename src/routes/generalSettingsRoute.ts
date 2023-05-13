@@ -40,7 +40,7 @@ const upload = multer({
  *     content:
  *       application/json:
  *         schema:
- *            $ref: '#/components/schemas/GeneralSettingsInput'
+ *            $ref: '#/components/schemas/GeneralSettings'
  *    responses:
  *      200:
  *        description: Success

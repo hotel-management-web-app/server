@@ -4,7 +4,7 @@ import Joi from 'joi';
  * @openapi
  * components:
  *  schemas:
- *    RoomTypeInput:
+ *    RoomType:
  *      type: object
  *      required:
  *        - name
@@ -52,7 +52,7 @@ export const roomTypeSchema = Joi.object({
  * @openapi
  * components:
  *  schemas:
- *    RoomInput:
+ *    Room:
  *      type: object
  *      required:
  *        - roomTypeId
@@ -81,7 +81,7 @@ export const roomSchema = Joi.object({
  * @openapi
  * components:
  *  schemas:
- *    BookingInput:
+ *    Booking:
  *      type: object
  *      required:
  *        - arrivalDate
@@ -125,7 +125,7 @@ export const bookingSchema = Joi.object({
  * @openapi
  * components:
  *  schemas:
- *    GuestInput:
+ *    Guest:
  *      type: object
  *      required:
  *        - firstName
@@ -166,7 +166,7 @@ export const guestSchema = Joi.object({
  * @openapi
  * components:
  *  schemas:
- *    AboutInfoInput:
+ *    AboutInfo:
  *      type: object
  *      required:
  *        - title
@@ -188,7 +188,7 @@ export const aboutInfoSchema = Joi.object({
  * @openapi
  * components:
  *  schemas:
- *    AboutDetailInput:
+ *    AboutDetail:
  *      type: object
  *      required:
  *        - title
@@ -210,7 +210,7 @@ export const aboutDetailSchema = Joi.object({
  * @openapi
  * components:
  *  schemas:
- *    GeneralSettingsInput:
+ *    GeneralSettings:
  *      type: object
  *      required:
  *        - hotelName

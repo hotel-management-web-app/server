@@ -38,7 +38,7 @@ const router = express.Router();
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/GuestInput'
+ *            $ref: '#/components/schemas/Guest'
  *    responses:
  *      200:
  *        description: Success
@@ -86,7 +86,7 @@ router.route('/').get(getGuests).post(protect, createGuest);
  *     content:
  *       application/json:
  *         schema:
- *            $ref: '#/components/schemas/GuestInput'
+ *            $ref: '#/components/schemas/Guest'
  *    responses:
  *      200:
  *        description: Success

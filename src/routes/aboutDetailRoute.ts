@@ -43,7 +43,7 @@ const upload = multer({
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/AboutDetailInput'
+ *            $ref: '#/components/schemas/AboutDetail'
  *    responses:
  *      200:
  *        description: Success
@@ -94,7 +94,7 @@ router
  *     content:
  *       application/json:
  *         schema:
- *            $ref: '#/components/schemas/AboutDetailInput'
+ *            $ref: '#/components/schemas/AboutDetail'
  *    responses:
  *      200:
  *        description: Success

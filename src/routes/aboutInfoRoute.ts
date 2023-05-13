@@ -35,7 +35,7 @@ const router = express.Router();
  *     content:
  *       application/json:
  *         schema:
- *            $ref: '#/components/schemas/AboutInfoInput'
+ *            $ref: '#/components/schemas/AboutInfo'
  *    responses:
  *      200:
  *        description: Success

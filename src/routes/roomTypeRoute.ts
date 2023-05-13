@@ -44,7 +44,7 @@ const fields = [{ name: 'image', maxCount: 1 }, { name: 'images' }];
  *      content:
  *        multipart/form-data:
  *          schema:
- *            $ref: '#/components/schemas/RoomTypeInput'
+ *            $ref: '#/components/schemas/RoomType'
  *    responses:
  *      200:
  *        description: Success
@@ -95,7 +95,7 @@ router
  *      content:
  *        multipart/form-data:
  *          schema:
- *            $ref: '#/components/schemas/RoomTypeInput'
+ *            $ref: '#/components/schemas/RoomType'
  *    responses:
  *      200:
  *        description: Success

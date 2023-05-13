@@ -39,7 +39,7 @@ const router = express.Router();
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/BookingInput'
+ *            $ref: '#/components/schemas/Booking'
  *    responses:
  *      200:
  *        description: Success
@@ -87,7 +87,7 @@ router.route('/').get(getBookings).post(protect, createBooking);
  *     content:
  *       application/json:
  *         schema:
- *            $ref: '#/components/schemas/BookingInput'
+ *            $ref: '#/components/schemas/Booking'
  *    responses:
  *      200:
  *        description: Success
