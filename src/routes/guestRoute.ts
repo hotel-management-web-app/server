@@ -10,7 +10,110 @@ import { protect } from '../middleware/authMiddleware';
 
 const router = express.Router();
 
+/**
+ * @openapi
+ * '/api/guests':
+ *  get:
+ *    tags:
+ *    - Guests
+ *    summary: Get all guests
+ *    description: Get all guests
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Bad Request
+ */
+
+/**
+ * @openapi
+ * '/api/guests':
+ *  post:
+ *    tags:
+ *    - Guests
+ *    summary: Add guest
+ *    description: Add guest
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/GuestInput'
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Cannot create guest
+ */
+
 router.route('/').get(getGuests).post(protect, createGuest);
+
+/**
+ * @openapi
+ * '/api/guests/{id}':
+ *  get:
+ *    tags:
+ *    - Guests
+ *    summary: Get guest by id
+ *    description: Get guest by id
+ *    parameters:
+ *    - name: id
+ *      in: path
+ *      description: The id of the guest
+ *      required: true
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Guest not found
+ */
+
+/**
+ * @openapi
+ * '/api/guests/{id}':
+ *  put:
+ *    tags:
+ *    - Guests
+ *    summary: Edit room
+ *    description: Edit guest
+ *    parameters:
+ *    - name: id
+ *      in: path
+ *      description: The id of the guest
+ *      required: true
+ *    requestBody:
+ *     required: true
+ *     content:
+ *       application/json:
+ *         schema:
+ *            $ref: '#/components/schemas/GuestInput'
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Cannot edit guest
+ */
+
+/**
+ * @openapi
+ * '/api/guests/{id}':
+ *  delete:
+ *    tags:
+ *    - Guests
+ *    summary: Delete guest
+ *    description: Delete guest
+ *    parameters:
+ *    - name: id
+ *      in: path
+ *      description: The id of the guest
+ *      required: true
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Cannot delete guest
+ */
+
 router
   .route('/:id')
   .get(getGuest)

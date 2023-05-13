@@ -66,7 +66,7 @@ router.route('/').get(getRooms).post(protect, createRoom);
  *      200:
  *        description: Success
  *      404:
- *        description: Room type not found
+ *        description: Room not found
  */
 
 /**

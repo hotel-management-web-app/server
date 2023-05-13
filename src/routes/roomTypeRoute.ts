@@ -42,7 +42,7 @@ const fields = [{ name: 'image', maxCount: 1 }, { name: 'images' }];
  *    requestBody:
  *      required: true
  *      content:
- *        application/json:
+ *        multipart/form-data:
  *          schema:
  *            $ref: '#/components/schemas/RoomTypeInput'
  *    responses:

@@ -14,12 +14,27 @@ import Joi from 'joi';
  *        name:
  *          type: string
  *          default: Test Room
- *        occupancy:
+ *        description:
  *          type: string
+ *          default: ''
+ *        occupancy:
+ *          type: number
  *          default: 3
  *        price:
- *          type: string
+ *          type: number
  *          default: 300000
+ *        image:
+ *          type: string
+ *          default: ''
+ *        images:
+ *          type: array
+ *          default: []
+ *        amenities:
+ *          type: array
+ *          default: []
+ *        details:
+ *          type: array
+ *          default: []
  */
 
 export const roomTypeSchema = Joi.object({
@@ -105,6 +120,34 @@ export const bookingSchema = Joi.object({
   children: Joi.number().required(),
   guestId: Joi.number(),
 });
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    GuestInput:
+ *      type: object
+ *      required:
+ *        - firstName
+ *        - lastName
+ *        - email
+ *      properties:
+ *        firstName:
+ *          type: string
+ *          default: John
+ *        lastName:
+ *          type: string
+ *          default: Doe
+ *        email:
+ *          type: string
+ *          default: johndoe@example.com
+ *        phoneNumber:
+ *          type: string
+ *          default: 123456789
+ *        notes:
+ *          type: string
+ *          default: ''
+ */
 
 export const guestSchema = Joi.object({
   firstName: Joi.string().min(3).max(48).required(),
