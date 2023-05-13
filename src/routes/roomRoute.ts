@@ -60,7 +60,7 @@ router.route('/').get(getRooms).post(protect, createRoom);
  *    parameters:
  *    - name: id
  *      in: path
- *      description: The id of the room type
+ *      description: The id of the room
  *      required: true
  *    responses:
  *      200:

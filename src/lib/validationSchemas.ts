@@ -62,6 +62,40 @@ export const roomSchema = Joi.object({
   roomNumber: Joi.number().required(),
 });
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    BookingInput:
+ *      type: object
+ *      required:
+ *        - arrivalDate
+ *        - departureDate
+ *        - roomId
+ *        - adults
+ *        - children
+ *        - guestId
+ *      properties:
+ *        arrivalDate:
+ *          type: string
+ *          default: 2023-03-24T10:04:03.022Z
+ *        departureDate:
+ *          type: string
+ *          default: 2023-03-29T14:19:15.969Z
+ *        roomId:
+ *          type: number
+ *          default: 1
+ *        adults:
+ *          type: number
+ *          default: 1
+ *        children:
+ *          type: number
+ *          default: 0
+ *        guestId:
+ *          type: number
+ *          default: 1
+ */
+
 export const bookingSchema = Joi.object({
   status: Joi.string(),
   arrivalDate: Joi.date().required(),
