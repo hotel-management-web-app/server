@@ -7,7 +7,9 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'REST API Docs',
+      title: 'Hotel Server API Documentation',
+      description:
+        "This Hotel API, allows you to retrieve information about different room types and individual rooms, create and retrieve bookings, manage guest profiles, access and update general settings about hotel itself. Additionally, the API provides endpoints to retrieve dashboard data for an overview of the hotel's performance and operations, as well as detailed report about revenues and demands on specific rooms.",
       version,
     },
     components: {
