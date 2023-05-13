@@ -267,6 +267,39 @@ export const profileInfoSchema = Joi.object({
   phoneNumber: Joi.string().required(),
 });
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    Contact:
+ *      type: object
+ *      required:
+ *        - firstName
+ *        - secondName
+ *        - email
+ *        - subject
+ *        - message
+ *      properties:
+ *        firstName:
+ *          type: string
+ *          default: John
+ *        lastName:
+ *          type: string
+ *          default: Doe
+ *        email:
+ *          type: string
+ *          default: johndoe@example.com
+ *        phoneNumber:
+ *          type: string
+ *          default: 123456789
+ *        subject:
+ *          type: string
+ *          default: Subject
+ *        message:
+ *          type: string
+ *          default: Message
+ */
+
 export const contactDataSchema = Joi.object({
   firstName: Joi.string().min(3).max(48).required(),
   secondName: Joi.string().min(3).max(48).required(),
