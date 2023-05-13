@@ -309,6 +309,58 @@ export const contactDataSchema = Joi.object({
   message: Joi.string().required(),
 });
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    BookingForm:
+ *      type: object
+ *      required:
+ *        - privacyTerms
+ *        - conditionsAndPolicies
+ *        - firstName
+ *        - lastName
+ *        - email
+ *        - phoneNumber
+ *      properties:
+ *        privacyTerms:
+ *          type: boolean
+ *          default: true
+ *        conditionsAndPolicies:
+ *          type: boolean
+ *          default: true
+ *        firstName:
+ *          type: string
+ *          default: John
+ *        lastName:
+ *          type: string
+ *          default: Doe
+ *        email:
+ *          type: string
+ *          default: johndoe@example.com
+ *        phoneNumber:
+ *          type: string
+ *          default: 123456789
+ *        notes:
+ *          type: string
+ *          default: Notes
+ *        roomTypeId:
+ *          type: number
+ *          default: 1
+ *        arrivalDate:
+ *          type: string
+ *          default: 2023-03-23T19:48:13.232Z
+ *        departureDate:
+ *          type: string
+ *          default: 2023-03-31T13:33:36.165Z
+ *        adults:
+ *          type: number
+ *          default: 1
+ *        children:
+ *          type: number
+ *          default: 0
+ */
+
 export const bookingFormSchema = Joi.object({
   privacyTerms: Joi.boolean().required(),
   conditionsAndPolicies: Joi.boolean().required(),
