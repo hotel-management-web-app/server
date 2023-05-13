@@ -206,6 +206,32 @@ export const aboutDetailSchema = Joi.object({
   description: Joi.string().allow(''),
 });
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    GeneralSettingsInput:
+ *      type: object
+ *      required:
+ *        - hotelName
+ *        - country
+ *        - email
+ *        - phoneNumber
+ *      properties:
+ *        hotelName:
+ *          type: string
+ *          default: Hotel
+ *        country:
+ *          type: string
+ *          default: USA
+ *        email:
+ *          type: string
+ *          default: hotel@example.com
+ *        phoneNumber:
+ *          type: string
+ *          default: 123456789
+ */
+
 export const generalSettingsSchema = Joi.object({
   hotelName: Joi.string().required(),
   country: Joi.string().required(),
