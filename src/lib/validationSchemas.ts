@@ -162,6 +162,23 @@ export const guestSchema = Joi.object({
   booking: bookingSchema,
 });
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    AboutInfoInput:
+ *      type: object
+ *      required:
+ *        - title
+ *      properties:
+ *        title:
+ *          type: string
+ *          default: Title
+ *        description:
+ *          type: string
+ *          default: ''
+ */
+
 export const aboutInfoSchema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().allow(''),
