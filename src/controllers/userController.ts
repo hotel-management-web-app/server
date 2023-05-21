@@ -2,6 +2,7 @@ import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 import prisma from '../lib/prisma';
+import { Prisma } from '@prisma/client';
 
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -74,6 +75,34 @@ export const loginUser = asyncHandler(async (req, res) => {
 
 export const getMe = asyncHandler(async (req, res) => {
   res.send(req.user);
+});
+
+export const getUsers = asyncHandler(async (req, res) => {
+  const { page, limit, search } = req.query;
+
+  const currentLimit = Number(limit);
+  const pageNumber = Number(page);
+  const offset = (pageNumber - 1) * currentLimit;
+
+  const currentSearch = search ? String(search) : '';
+
+  const filter: Prisma.UserWhereInput = {
+    name: { contains: currentSearch, mode: 'insensitive' },
+  };
+
+  const users = await prisma.user.findMany({
+    orderBy: {
+      id: 'asc',
+    },
+    where: filter,
+    ...(offset && { skip: offset }),
+    ...(currentLimit && { take: currentLimit }),
+  });
+
+  const usersCount = await prisma.user.count();
+  const pageCount = Math.ceil(usersCount / currentLimit);
+
+  res.send({ users, pageCount });
 });
 
 export const logout = asyncHandler(async (req, res) => {
