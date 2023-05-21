@@ -183,7 +183,8 @@ const sendEmailMessage = async (guest: Guest, booking: Booking) => {
   const generalSettings = await prisma.generalSettings.findFirst();
 
   const { firstName, lastName } = guest;
-  const { arrivalDate, departureDate, adults, children, totalPrice } = booking;
+  const { id, arrivalDate, departureDate, adults, children, totalPrice } =
+    booking;
   const nights = countDaysBetweenDates(arrivalDate, departureDate);
 
   // send mail with defined transport object
@@ -197,6 +198,7 @@ const sendEmailMessage = async (guest: Guest, booking: Booking) => {
       <p>Thank you for your booking. This email confirms that your booking has been received.</p>
       <br />
       <h2>Details</h2>
+      <p><strong>Booking Reference number:</strong> ${id}</p>
       <p><strong>Room type:</strong> ${room?.roomType.name}</p>
       <p><strong>Check-in date:</strong> ${arrivalDate}</p>
       <p><strong>Check-out date:</strong> ${departureDate}</p>

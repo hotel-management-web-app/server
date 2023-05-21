@@ -16,16 +16,23 @@ export const getBookings = asyncHandler(async (req, res) => {
   const currentSearch = search ? String(search) : '';
 
   const filter: Prisma.BookingWhereInput = {
-    guest: {
-      OR: [
-        {
-          firstName: { contains: currentSearch, mode: 'insensitive' },
+    OR: [
+      {
+        id: { contains: currentSearch, mode: 'insensitive' },
+      },
+      {
+        guest: {
+          OR: [
+            {
+              firstName: { contains: currentSearch, mode: 'insensitive' },
+            },
+            {
+              lastName: { contains: currentSearch, mode: 'insensitive' },
+            },
+          ],
         },
-        {
-          lastName: { contains: currentSearch, mode: 'insensitive' },
-        },
-      ],
-    },
+      },
+    ],
   };
 
   const bookings = await prisma.booking.findMany({
@@ -59,7 +66,7 @@ export const getBookings = asyncHandler(async (req, res) => {
 });
 
 export const getBooking = asyncHandler(async (req, res, next) => {
-  const id = Number(req.params.id);
+  const id = req.params.id;
   const booking = await prisma.booking.findUnique({
     where: {
       id: id,
@@ -124,7 +131,7 @@ export const updateBooking = asyncHandler(async (req, res) => {
 
   const booking = await prisma.booking.update({
     where: {
-      id: Number(req.params.id),
+      id: req.params.id,
     },
     data: req.body,
   });
@@ -134,7 +141,7 @@ export const updateBooking = asyncHandler(async (req, res) => {
 export const deleteBooking = asyncHandler(async (req, res) => {
   const booking = await prisma.booking.delete({
     where: {
-      id: Number(req.params.id),
+      id: req.params.id,
     },
   });
   res.send(booking);
