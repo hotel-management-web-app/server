@@ -3,11 +3,17 @@ import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 import prisma from '../lib/prisma';
 import { Prisma } from '@prisma/client';
+import Validator from '../utils/validator';
+import { loginSchema, registerSchema } from '../lib/validationSchemas';
 
 export const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const validator = new Validator(registerSchema, req.body);
 
-  if (!name || !email || !password) {
+  validator.showErrors(res);
+
+  const { name, email, password, phoneNumber } = req.body;
+
+  if (!name || !email || !phoneNumber || !password) {
     res.status(400);
     throw new Error('Please add all fields!');
   }
@@ -25,6 +31,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     data: {
       name,
       email,
+      phoneNumber,
       password: hashedPassword,
     },
   });
@@ -43,6 +50,10 @@ export const registerUser = asyncHandler(async (req, res) => {
 });
 
 export const loginUser = asyncHandler(async (req, res) => {
+  const validator = new Validator(loginSchema, req.body);
+
+  validator.showErrors(res);
+
   const { email, password } = req.body;
 
   const user = await prisma.user.update({
