@@ -56,11 +56,8 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   const { email, password } = req.body;
 
-  const user = await prisma.user.update({
+  const user = await prisma.user.findUnique({
     where: { email },
-    data: {
-      lastLogin: new Date(Date.now()).toISOString(),
-    },
   });
 
   if (user && (await argon2.verify(user.password, password))) {
@@ -78,6 +75,12 @@ export const loginUser = asyncHandler(async (req, res) => {
         email: user.email,
         token,
       });
+    await prisma.user.update({
+      where: { email },
+      data: {
+        lastLogin: new Date(Date.now()).toISOString(),
+      },
+    });
   } else {
     res.status(400);
     throw new Error('Invalid credentials');
@@ -106,6 +109,13 @@ export const getUsers = asyncHandler(async (req, res) => {
       id: 'asc',
     },
     where: filter,
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      lastLogin: true,
+      phoneNumber: true,
+    },
     ...(offset && { skip: offset }),
     ...(currentLimit && { take: currentLimit }),
   });
@@ -114,6 +124,22 @@ export const getUsers = asyncHandler(async (req, res) => {
   const pageCount = Math.ceil(usersCount / currentLimit);
 
   res.send({ users, pageCount });
+});
+
+export const getUser = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const user = await prisma.user.findUnique({
+    where: { id: Number(id) },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      lastLogin: true,
+      phoneNumber: true,
+    },
+  });
+
+  res.send(user);
 });
 
 export const logout = asyncHandler(async (req, res) => {

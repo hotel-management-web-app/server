@@ -5,6 +5,7 @@ import {
   registerUser,
   logout,
   getUsers,
+  getUser,
 } from '../controllers/userController';
 import { protect } from '../middleware/authMiddleware';
 
@@ -114,5 +115,6 @@ router.post('/logout', protect, logout);
 
 router.get('/me', protect, getMe);
 router.get('/users', protect, getUsers);
+router.get('/users/:id', protect, getUser);
 
 export default router;
