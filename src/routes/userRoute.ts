@@ -6,6 +6,7 @@ import {
   logout,
   getUsers,
   getUser,
+  updateUser,
 } from '../controllers/userController';
 import { protect } from '../middleware/authMiddleware';
 
@@ -116,5 +117,6 @@ router.post('/logout', protect, logout);
 router.get('/me', protect, getMe);
 router.get('/users', protect, getUsers);
 router.get('/users/:id', protect, getUser);
+router.put('/users/:id', protect, updateUser);
 
 export default router;

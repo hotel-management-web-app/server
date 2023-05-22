@@ -280,6 +280,8 @@ export const profileInfoSchema = Joi.object({
   phoneNumber: Joi.string().required(),
 });
 
+export const userSchema = profileInfoSchema;
+
 /**
  * @openapi
  * components:

@@ -4,7 +4,11 @@ import asyncHandler from 'express-async-handler';
 import prisma from '../lib/prisma';
 import { Prisma } from '@prisma/client';
 import Validator from '../utils/validator';
-import { loginSchema, registerSchema } from '../lib/validationSchemas';
+import {
+  loginSchema,
+  registerSchema,
+  userSchema,
+} from '../lib/validationSchemas';
 
 export const registerUser = asyncHandler(async (req, res) => {
   const validator = new Validator(registerSchema, req.body);
@@ -137,6 +141,21 @@ export const getUser = asyncHandler(async (req, res) => {
       lastLogin: true,
       phoneNumber: true,
     },
+  });
+
+  res.send(user);
+});
+
+export const updateUser = asyncHandler(async (req, res) => {
+  const validator = new Validator(userSchema, req.body);
+
+  validator.showErrors(res);
+
+  const user = await prisma.user.update({
+    where: {
+      id: Number(req.params.id),
+    },
+    data: req.body,
   });
 
   res.send(user);
