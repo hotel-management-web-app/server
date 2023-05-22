@@ -7,6 +7,7 @@ import {
   getUsers,
   getUser,
   updateUser,
+  deleteUser,
 } from '../controllers/userController';
 import { protect } from '../middleware/authMiddleware';
 
@@ -118,5 +119,6 @@ router.get('/me', protect, getMe);
 router.get('/users', protect, getUsers);
 router.get('/users/:id', protect, getUser);
 router.put('/users/:id', protect, updateUser);
+router.delete('/users/:id', protect, deleteUser);
 
 export default router;

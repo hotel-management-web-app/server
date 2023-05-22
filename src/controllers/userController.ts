@@ -161,6 +161,15 @@ export const updateUser = asyncHandler(async (req, res) => {
   res.send(user);
 });
 
+export const deleteUser = asyncHandler(async (req, res) => {
+  const user = await prisma.user.delete({
+    where: {
+      id: Number(req.params.id),
+    },
+  });
+  res.send(user);
+});
+
 export const logout = asyncHandler(async (req, res) => {
   res.clearCookie('token');
   res.send('You are successfully logged out!');
