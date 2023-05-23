@@ -74,6 +74,10 @@ export const updateUser = asyncHandler(async (req, res) => {
 });
 
 export const deleteUser = asyncHandler(async (req, res) => {
+  const id = Number(req.params.id);
+
+  if (id === req?.user?.id) throw new Error('User cannot delete himself!');
+
   const user = await prisma.user.delete({
     where: {
       id: Number(req.params.id),
