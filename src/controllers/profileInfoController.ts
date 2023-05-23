@@ -13,6 +13,7 @@ export const getProfileInfo = asyncHandler(async (req, res) => {
       email: true,
       phoneNumber: true,
       lastLogin: true,
+      role: true,
       createdAt: true,
       updatedAt: true,
     },

@@ -28,6 +28,7 @@ export const getUsers = asyncHandler(async (req, res) => {
       email: true,
       lastLogin: true,
       phoneNumber: true,
+      role: true,
     },
     ...(offset && { skip: offset }),
     ...(currentLimit && { take: currentLimit }),
@@ -36,7 +37,9 @@ export const getUsers = asyncHandler(async (req, res) => {
   const usersCount = await prisma.user.count();
   const pageCount = Math.ceil(usersCount / currentLimit);
 
-  res.send({ users, pageCount });
+  const userId = req?.user?.id;
+
+  res.send({ userId, users, pageCount });
 });
 
 export const getUser = asyncHandler(async (req, res) => {
