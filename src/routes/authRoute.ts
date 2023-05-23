@@ -20,23 +20,9 @@ const router = express.Router();
  *    requestBody:
  *      required: true
  *      content:
- *        application/json:
- *          schema:
- *             type: object
- *             required:
- *               - name
- *               - email
- *               - password
- *             properties:
- *               name:
- *                 type: string
- *                 default: Admin
- *               email:
- *                 type: string
- *                 default: admin@example.com
- *               password:
- *                 type: string
- *                 default: password
+ *       application/json:
+ *         schema:
+ *            $ref: '#/components/schemas/Register'
  *    responses:
  *      200:
  *        description: Success
@@ -57,19 +43,9 @@ router.post('/register', registerUser);
  *    requestBody:
  *      required: true
  *      content:
- *        application/json:
- *          schema:
- *             type: object
- *             required:
- *               - email
- *               - password
- *             properties:
- *               email:
- *                 type: string
- *                 default: admin@example.com
- *               password:
- *                 type: string
- *                 default: password
+ *       application/json:
+ *         schema:
+ *            $ref: '#/components/schemas/Login'
  *    responses:
  *      200:
  *        description: Success
