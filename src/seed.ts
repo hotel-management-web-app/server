@@ -11,6 +11,7 @@ async function main() {
       name: 'Admin',
       email: 'admin@example.com',
       password: hashedPassword,
+      role: 'SUPERADMIN',
       phoneNumber: '1234567890',
     },
   });

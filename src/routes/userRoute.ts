@@ -6,6 +6,7 @@ import {
   deleteUser,
 } from '../controllers/userController';
 import { protect } from '../middleware/authMiddleware';
+import { authorizeSuperAdmin } from '../middleware/authorizationMiddleware';
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ const router = express.Router();
  *        description: Bad Request
  */
 
-router.get('/', protect, getUsers);
+router.get('/', [protect, authorizeSuperAdmin], getUsers);
 
 /**
  * @openapi
@@ -46,7 +47,7 @@ router.get('/', protect, getUsers);
  *        description: Bad Request
  */
 
-router.get('/:id', protect, getUser);
+router.get('/:id', [protect, authorizeSuperAdmin], getUser);
 
 /**
  * @openapi
@@ -74,7 +75,7 @@ router.get('/:id', protect, getUser);
  *        description: Cannot edit user
  */
 
-router.put('/:id', protect, updateUser);
+router.put('/:id', [protect, authorizeSuperAdmin], updateUser);
 
 /**
  * @openapi
@@ -96,6 +97,6 @@ router.put('/:id', protect, updateUser);
  *        description: Cannot delete user
  */
 
-router.delete('/:id', protect, deleteUser);
+router.delete('/:id', [protect, authorizeSuperAdmin], deleteUser);
 
 export default router;
