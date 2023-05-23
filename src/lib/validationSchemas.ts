@@ -280,6 +280,28 @@ export const profileInfoSchema = Joi.object({
   phoneNumber: Joi.string().required(),
 });
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    User:
+ *      type: object
+ *      required:
+ *        - name
+ *        - email
+ *        - phoneNumber
+ *      properties:
+ *        name:
+ *          type: string
+ *          default: Admin
+ *        email:
+ *          type: string
+ *          default: admin@example.com
+ *        phoneNumber:
+ *          type: string
+ *          default: 123456789
+ */
+
 export const userSchema = profileInfoSchema;
 
 /**
