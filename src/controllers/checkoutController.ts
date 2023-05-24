@@ -54,7 +54,7 @@ export const checkout = asyncHandler(async (req, res) => {
           product_data: {
             name: `${bookedRoomType?.name} - reservation`,
           },
-          unit_amount: Number(bookedRoomType?.price) * 100 * numberOfNights,
+          unit_amount: Number(bookedRoomType?.price) * numberOfNights,
         },
         quantity: 1,
       },
@@ -205,7 +205,7 @@ const sendEmailMessage = async (guest: Guest, booking: Booking) => {
       <p><strong>Number of nights:</strong> ${nights}</p>
       <p><strong>Adults:</strong> ${adults}</p>
       <p><strong>Children:</strong> ${children}</p>
-      <p><strong>Price:</strong> ${(totalPrice / 100).toFixed(2)}</p>
+      <p><strong>Price:</strong> ${(totalPrice / 100).toFixed(2)}$</p>
       <br />
       <p>We look forward to seeing you there! Have a happy stay!</p>
       <br />

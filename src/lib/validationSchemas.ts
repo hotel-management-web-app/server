@@ -1,5 +1,35 @@
 import Joi from 'joi';
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    Register:
+ *      type: object
+ *      required:
+ *        - name
+ *        - email
+ *        - phoneNumber
+ *        - password
+ *        - confirmPassword
+ *      properties:
+ *        name:
+ *          type: string
+ *          default: Admin
+ *        email:
+ *          type: string
+ *          default: admin@example.com
+ *        phoneNumber:
+ *          type: string
+ *          default: 123456789
+ *        password:
+ *          type: string
+ *          default: password
+ *        confirmPassword:
+ *          type: string
+ *          default: password
+ */
+
 export const registerSchema = Joi.object({
   name: Joi.string().min(3).max(48).required(),
   email: Joi.string().email().required(),
@@ -8,9 +38,27 @@ export const registerSchema = Joi.object({
   confirmPassword: Joi.any().valid(Joi.ref('password')).required(),
 });
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    Login:
+ *      type: object
+ *      required:
+ *        - email
+ *        - password
+ *      properties:
+ *        email:
+ *          type: string
+ *          default: admin@example.com
+ *        password:
+ *          type: string
+ *          default: password
+ */
+
 export const loginSchema = Joi.object({
-  email: Joi.string().email().required(),
-  password: Joi.string().required(),
+  email: Joi.string(),
+  password: Joi.string(),
 });
 
 /**
@@ -166,9 +214,7 @@ export const guestSchema = Joi.object({
   firstName: Joi.string().min(3).max(48).required(),
   lastName: Joi.string().min(3).max(48).required(),
   email: Joi.string().email().required(),
-  phoneNumber: Joi.string()
-    .length(10)
-    .pattern(/^[0-9]+$/),
+  phoneNumber: Joi.string().required(),
   lastBooking: Joi.date(),
   notes: Joi.string().allow(''),
   status: Joi.string(),
@@ -279,6 +325,28 @@ export const profileInfoSchema = Joi.object({
   email: Joi.string().email().required(),
   phoneNumber: Joi.string().required(),
 });
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    User:
+ *      type: object
+ *      required:
+ *        - name
+ *        - email
+ *        - phoneNumber
+ *      properties:
+ *        name:
+ *          type: string
+ *          default: Admin
+ *        email:
+ *          type: string
+ *          default: admin@example.com
+ *        phoneNumber:
+ *          type: string
+ *          default: 123456789
+ */
 
 export const userSchema = profileInfoSchema;
 

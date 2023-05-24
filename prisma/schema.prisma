@@ -17,8 +17,14 @@ model User {
   password    String
   phoneNumber String?
   lastLogin   DateTime @default(now())
+  role        Role     @default(ADMIN)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  SUPERADMIN
 }
 
 model RoomType {

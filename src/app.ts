@@ -11,6 +11,7 @@ import aboutInfoRoute from './routes/aboutInfoRoute';
 import aboutDetailRoute from './routes/aboutDetailRoute';
 import generalSettingsRoute from './routes/generalSettingsRoute';
 import userRoute from './routes/userRoute';
+import authRoute from './routes/authRoute';
 import profileInfoRoute from './routes/profileInfoRoute';
 import dashboardRoute from './routes/dashboardRoute';
 import tokenRoute from './routes/tokenRoute';
@@ -31,7 +32,8 @@ app.use(express.static('public'));
 
 const prefix = '/api';
 
-app.use(prefix + '/auth', userRoute);
+app.use(prefix + '/auth', authRoute);
+app.use(prefix + '/users', userRoute);
 app.use(prefix + '/profile-info', profileInfoRoute);
 app.use(prefix + '/room-types', roomTypeRoute);
 app.use(prefix + '/rooms', roomRoute);

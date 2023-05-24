@@ -9,6 +9,7 @@ declare global {
         email: string;
         lastLogin: Date;
         phoneNumber: string | null;
+        role: string;
         createdAt: Date;
         updatedAt: Date;
       } | null;
