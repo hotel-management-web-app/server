@@ -214,9 +214,7 @@ export const guestSchema = Joi.object({
   firstName: Joi.string().min(3).max(48).required(),
   lastName: Joi.string().min(3).max(48).required(),
   email: Joi.string().email().required(),
-  phoneNumber: Joi.string()
-    .length(10)
-    .pattern(/^[0-9]+$/),
+  phoneNumber: Joi.string().required(),
   lastBooking: Joi.date(),
   notes: Joi.string().allow(''),
   status: Joi.string(),
