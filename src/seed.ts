@@ -12,7 +12,7 @@ async function main() {
       email: 'admin@example.com',
       password: hashedPassword,
       role: 'SUPERADMIN',
-      phoneNumber: '1234567890',
+      phoneNumber: '+48123456789',
     },
   });
 
@@ -43,7 +43,7 @@ async function main() {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
-        phoneNumber: faker.phone.number(),
+        phoneNumber: faker.phone.number('+48#########'),
         lastBooking: faker.date.future(),
       },
     });
@@ -87,7 +87,7 @@ async function main() {
       hotelName: 'Hotel',
       country: 'Poland',
       email: 'hotel@example.com',
-      phoneNumber: '123456789',
+      phoneNumber: '+48123456789',
     },
   });
 }
